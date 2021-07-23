@@ -9,4 +9,5 @@ package com.zimonishim.GUI;
  */
 public interface IGUICallback {
     void addSortResultsToGUI(String result);
+    void addAddAllResultsToGUI(String result);
 }

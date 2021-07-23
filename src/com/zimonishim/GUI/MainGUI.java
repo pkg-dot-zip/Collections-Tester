@@ -1,5 +1,7 @@
 package com.zimonishim.GUI;
 
+import com.zimonishim.tests.AddTest;
+import com.zimonishim.tests.SortingTests;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -15,8 +17,6 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.LinkedList;
-
-import static com.zimonishim.tests.SortingTests.sortThread;
 
 public class MainGUI implements IGUI, IGUICallback {
 
@@ -35,10 +35,11 @@ public class MainGUI implements IGUI, IGUICallback {
 
     //Results TabPane.
     private TabPane resultsTabPane = new TabPane();
-    private VBox resultVBox = new VBox();
-    private Tab sortTab = new Tab("Sort", resultVBox);
+    private VBox sortResultVBox = new VBox();
+    private Tab sortTab = new Tab("Sort", sortResultVBox);
     private Tab removeTab = new Tab("Remove");
-    private Tab addTab = new Tab("Add");
+    private VBox addResultVBox = new VBox();
+    private Tab addTab = new Tab("Add", addResultVBox);
     private Tab insertTab = new Tab("Insert");
 
 
@@ -89,13 +90,26 @@ public class MainGUI implements IGUI, IGUICallback {
 
     @Override
     public void actionHandlingSetup() {
-        testArrayListButton.setOnAction(e -> sortThread(new ArrayList<Integer>(), Comparator.naturalOrder(), this).start());
-        testLinkedListButton.setOnAction(e -> sortThread(new LinkedList<Integer>(), Comparator.naturalOrder(), this).start());
+        testArrayListButton.setOnAction(e -> {
+                SortingTests.sortThread(new ArrayList<Integer>(), Comparator.naturalOrder(), this).start();
+                AddTest.addAllThread(new ArrayList<Integer>(), this).start();
+        });
+        testLinkedListButton.setOnAction(e -> {
+                SortingTests.sortThread(new LinkedList<Integer>(), Comparator.naturalOrder(), this).start();
+                AddTest.addAllThread(new LinkedList<Integer>(), this).start();
+        });
     }
 
     public void addSortResultsToGUI(String result){
         Platform.runLater(() -> {
-            resultVBox.getChildren().add(new Label(result));
+            sortResultVBox.getChildren().add(new Label(result));
+        });
+    }
+
+    @Override
+    public void addAddAllResultsToGUI(String result) {
+        Platform.runLater(() -> {
+            addResultVBox.getChildren().add(new Label(result));
         });
     }
 }
