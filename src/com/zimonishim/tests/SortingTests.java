@@ -6,47 +6,46 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
+import static com.zimonishim.util.TestData.getIntegerArray;
+
+/**
+ * Contains methods used to test sorting subclasses of the java.util.List interface with different comparators.
+ */
 public class SortingTests {
 
-    public static Thread sortThread(List<Integer> integers, Comparator comparator, IGUICallback callback){
+    public static <T extends Number> Thread sortThread(List<T> list, Comparator<T> comparator, IGUICallback callback){
+        return sortThread(list, getIntegerArray(), comparator, callback);
+    }
+
+    public static <T extends Number> Thread sortThread(List<T> list, T[] dataArray, Comparator<T> comparator, IGUICallback callback){
         return new Thread(() -> {
             System.out.println("Clicked on testButton.");
-            sortTest(integers, comparator, callback);
-            System.out.println("Starting thread for " + integers.getClass().getSimpleName() + ".");
+            sortTest(list, dataArray, comparator, callback);
+            System.out.println("Starting thread for " + list.getClass().getSimpleName() + ".");
         });
     }
 
-    public static void sortTest(List<Integer> integers, Comparator comparator, IGUICallback callback){
-        String listName = integers.getClass().getSimpleName();
+    public static <T extends Number> void sortTest(List<T> list, T[] dataArray, Comparator<T> comparator, IGUICallback callback){
+        String listName = list.getClass().getSimpleName();
 
         System.out.println("Now testing " + listName + ".");
 
-        integers.addAll(Arrays.asList(
-                10,
-                22,
-                5,
-                6,
-                3,
-                3,
-                21,
-                22,
-                50,
-                60,
-                5
-        ));
+        list.addAll(Arrays.asList(dataArray));
+
+        Object[] copyOfUnsortedList = list.toArray();
 
         long startTime = System.nanoTime();
-        System.out.println(startTime);
 
-        integers.sort(comparator);
+        list.sort(comparator);
 
         long endTime = System.nanoTime();
-        System.out.println(endTime);
 
         long totalTime = endTime - startTime;
         System.out.println("Total time for sorting: " + totalTime + " ns.");
 
-        callback.addResultToGUI("Total time for sorting: " + totalTime + " ns.");
+        Object[] copyOfSortedList = list.toArray();
+
+        callback.addSortResultsToGUI("Total time for sorting " + listName + ": " + totalTime + " ns." + "\n" + Arrays.toString(copyOfUnsortedList) + "\n" + Arrays.toString(copyOfSortedList));
     }
 
 }
