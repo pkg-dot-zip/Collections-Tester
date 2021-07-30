@@ -11,5 +11,5 @@ import com.zimonishim.GUI.resultTables.resultTypes.ResultEntry;
  */
 public interface IGUICallback {
     void addSortResultsToGUI(ResultEntry resultEntry);
-    void addAddAllResultsToGUI(String result);
+    void addAddAllResultsToGUI(ResultEntry resultEntry);
 }

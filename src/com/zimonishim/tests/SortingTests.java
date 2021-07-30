@@ -7,7 +7,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
-import static com.zimonishim.util.TestData.getIntegerArray;
+import static com.zimonishim.util.TestData.getBigArray;
 
 /**
  * Contains methods used to test sorting subclasses of the java.util.List interface with different comparators.
@@ -15,7 +15,7 @@ import static com.zimonishim.util.TestData.getIntegerArray;
 public class SortingTests {
 
     public static <T extends Number> Thread sortThread(List<T> list, Comparator<T> comparator, IGUICallback callback){
-        return sortThread(list, getIntegerArray(), comparator, callback);
+        return sortThread(list, getBigArray(), comparator, callback);
     }
 
     public static <T extends Number> Thread sortThread(List<T> list, T[] dataArray, Comparator<T> comparator, IGUICallback callback){
@@ -27,6 +27,13 @@ public class SortingTests {
     }
 
     public static <T extends Number> void sortTest(List<T> list, T[] dataArray, Comparator<T> comparator, IGUICallback callback){
+
+        try {
+            list = list.getClass().newInstance();
+        } catch (InstantiationException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
+
         String listName = list.getClass().getSimpleName();
 
         System.out.println("Now testing " + listName + ".");
@@ -45,8 +52,6 @@ public class SortingTests {
         System.out.println("Total time for sorting: " + totalTime + " ns.");
 
         Number[] copyOfSortedList = list.toArray(new Number[0]);
-
-        System.out.println("Total time for sorting " + listName + ": " + totalTime + " ns." + "\n" + Arrays.toString(copyOfUnsortedList) + "\n" + Arrays.toString(copyOfSortedList));
 
         callback.addSortResultsToGUI(new ResultEntry(listName, "Sort Natural Order", copyOfUnsortedList, totalTime, copyOfSortedList));
     }
