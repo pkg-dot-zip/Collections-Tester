@@ -1,6 +1,7 @@
 package com.zimonishim.tests;
 
 import com.zimonishim.GUI.IGUICallback;
+import com.zimonishim.GUI.resultTables.resultTypes.ResultEntry;
 
 import java.util.Arrays;
 import java.util.Comparator;
@@ -32,7 +33,7 @@ public class SortingTests {
 
         list.addAll(Arrays.asList(dataArray));
 
-        Object[] copyOfUnsortedList = list.toArray();
+        Number[] copyOfUnsortedList = list.toArray(new Number[0]);
 
         long startTime = System.nanoTime();
 
@@ -43,9 +44,10 @@ public class SortingTests {
         long totalTime = endTime - startTime;
         System.out.println("Total time for sorting: " + totalTime + " ns.");
 
-        Object[] copyOfSortedList = list.toArray();
+        Number[] copyOfSortedList = list.toArray(new Number[0]);
 
-        callback.addSortResultsToGUI("Total time for sorting " + listName + ": " + totalTime + " ns." + "\n" + Arrays.toString(copyOfUnsortedList) + "\n" + Arrays.toString(copyOfSortedList));
+        System.out.println("Total time for sorting " + listName + ": " + totalTime + " ns." + "\n" + Arrays.toString(copyOfUnsortedList) + "\n" + Arrays.toString(copyOfSortedList));
+
+        callback.addSortResultsToGUI(new ResultEntry(listName, "Sort Natural Order", copyOfUnsortedList, totalTime, copyOfSortedList));
     }
-
 }

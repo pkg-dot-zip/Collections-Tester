@@ -12,5 +12,4 @@ public class TestData {
                 50, 60, 5, 12
         };
     }
-
 }

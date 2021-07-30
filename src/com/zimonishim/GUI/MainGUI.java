@@ -1,14 +1,13 @@
 package com.zimonishim.GUI;
 
-import com.zimonishim.tests.AddTest;
+import com.zimonishim.GUI.resultTables.ResultsTableViewHelper;
+import com.zimonishim.GUI.resultTables.resultTypes.ResultEntry;
+import com.zimonishim.tests.AddTests;
 import com.zimonishim.tests.SortingTests;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -30,17 +29,18 @@ public class MainGUI implements IGUI, IGUICallback {
     private Button testArrayListButton = new Button("Test ArrayList");
     private Button testLinkedListButton = new Button("Test LinkedList");
 
-    //Charts.
-    private Tab chartsTab = new Tab("Charts");
-
     //Results TabPane.
     private TabPane resultsTabPane = new TabPane();
-    private VBox sortResultVBox = new VBox();
-    private Tab sortTab = new Tab("Sort", sortResultVBox);
+    private Tab resultsTab = new Tab("Results", resultsTabPane);
+    private TableView<ResultEntry> sortTableView = ResultsTableViewHelper.getResultsTableView();
+    private Tab sortTab = new Tab("Sort", sortTableView);
     private Tab removeTab = new Tab("Remove");
     private VBox addResultVBox = new VBox();
     private Tab addTab = new Tab("Add", addResultVBox);
     private Tab insertTab = new Tab("Insert");
+
+    //Charts TabPane.
+    private Tab chartsTab = new Tab("Charts");
 
 
     public MainGUI(Stage stage) {
@@ -79,11 +79,11 @@ public class MainGUI implements IGUI, IGUICallback {
         );
 
         borderPane.setTop(new HBox(testArrayListButton, testLinkedListButton));
-        borderPane.setCenter(resultsTabPane);
 
         //Adding it all together.
         this.mainTabPane.getTabs().addAll(
                 mainTab,
+                resultsTab,
                 chartsTab
         );
     }
@@ -92,17 +92,18 @@ public class MainGUI implements IGUI, IGUICallback {
     public void actionHandlingSetup() {
         testArrayListButton.setOnAction(e -> {
                 SortingTests.sortThread(new ArrayList<Integer>(), Comparator.naturalOrder(), this).start();
-                AddTest.addAllThread(new ArrayList<Integer>(), this).start();
+                AddTests.addAllThread(new ArrayList<Integer>(), this).start();
         });
         testLinkedListButton.setOnAction(e -> {
                 SortingTests.sortThread(new LinkedList<Integer>(), Comparator.naturalOrder(), this).start();
-                AddTest.addAllThread(new LinkedList<Integer>(), this).start();
+                AddTests.addAllThread(new LinkedList<Integer>(), this).start();
         });
     }
 
-    public void addSortResultsToGUI(String result){
+    @Override
+    public void addSortResultsToGUI(ResultEntry resultEntry){
         Platform.runLater(() -> {
-            sortResultVBox.getChildren().add(new Label(result));
+            sortTableView.getItems().add(resultEntry);
         });
     }
 
