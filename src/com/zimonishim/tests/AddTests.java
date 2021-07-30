@@ -41,6 +41,5 @@ public class AddTests {
         Number[] copyOfAddedList = collection.toArray(new Number[0]);
 
         callback.addSortResultsToGUI(new ResultEntry(listName, "Add All Numbers", copyOfUnaddedList, totalTime, copyOfAddedList));
-//        callback.addAddAllResultsToGUI("Total time for adding " + numbers.toString() + " to " + listName + ": " + totalTime + " ns." + "\n" + Arrays.toString(copyOfUnaddedList) + "\n" + Arrays.toString(copyOfAddedList));
     }
 }

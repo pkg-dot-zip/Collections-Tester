@@ -5,11 +5,11 @@ package com.zimonishim.GUI.resultTables.resultTypes;
  */
 public class ResultEntry {
 
-    protected String collectionClassName;
-    protected String actionName;
-    protected Number[] beforeActionArray;
-    protected Long totalTime;
-    protected Number[] afterActionArray;
+    private final String collectionClassName;
+    private final String actionName;
+    private final Number[] beforeActionArray;
+    private final Long totalTime;
+    private final Number[] afterActionArray;
 
     public ResultEntry(Class<?> collectionClass, String actionName, Number[] beforeActionArray, Long totalTime, Number[] afterActionArray) {
         this(collectionClass.getSimpleName(), actionName, beforeActionArray, totalTime, afterActionArray);

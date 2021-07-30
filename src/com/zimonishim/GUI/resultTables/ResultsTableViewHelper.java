@@ -1,15 +1,12 @@
 package com.zimonishim.GUI.resultTables;
 
 import com.zimonishim.GUI.resultTables.resultTypes.ResultEntry;
-import com.zimonishim.util.IconHelper;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.util.Arrays;
-
-import static com.zimonishim.util.TestData.getIntegerArray;
 
 public class ResultsTableViewHelper {
 
