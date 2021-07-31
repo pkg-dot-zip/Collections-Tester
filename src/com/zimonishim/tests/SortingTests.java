@@ -1,6 +1,5 @@
 package com.zimonishim.tests;
 
-import com.zimonishim.GUI.IGUICallback;
 import com.zimonishim.GUI.resultTables.resultTypes.ResultEntry;
 
 import java.util.Arrays;
@@ -14,11 +13,11 @@ import static com.zimonishim.util.TestData.getBigArray;
  */
 public class SortingTests {
 
-    public static <T extends Number> Thread sortThread(List<T> list, Comparator<T> comparator, IGUICallback callback){
+    public static <T extends Number> Thread sortThread(List<T> list, Comparator<T> comparator, ITestCallback callback){
         return sortThread(list, getBigArray(), comparator, callback);
     }
 
-    public static <T extends Number> Thread sortThread(List<T> list, T[] dataArray, Comparator<T> comparator, IGUICallback callback){
+    public static <T extends Number> Thread sortThread(List<T> list, T[] dataArray, Comparator<T> comparator, ITestCallback callback){
         return new Thread(() -> {
             System.out.println("Clicked on testButton.");
             sortTest(list, dataArray, comparator, callback);
@@ -26,7 +25,7 @@ public class SortingTests {
         });
     }
 
-    public static <T extends Number> void sortTest(List<T> list, T[] dataArray, Comparator<T> comparator, IGUICallback callback){
+    public static <T extends Number> void sortTest(List<T> list, T[] dataArray, Comparator<T> comparator, ITestCallback callback){
 
         try {
             list = list.getClass().newInstance();
@@ -53,6 +52,6 @@ public class SortingTests {
 
         Number[] copyOfSortedList = list.toArray(new Number[0]);
 
-        callback.addSortResultsToGUI(new ResultEntry(listName, "Sort Natural Order", copyOfUnsortedList, totalTime, copyOfSortedList));
+        callback.returnSortResult(new ResultEntry(listName, "Sort Natural Order", copyOfUnsortedList, totalTime, copyOfSortedList));
     }
 }

@@ -15,14 +15,6 @@ public class TestData {
         integers = setupLargeArray();
     }
 
-    public static <T extends Number> T[] getIntegerArray(){
-        return (T[]) new Integer[]{
-                10, 22, 5, 6,
-                3, 3, 21, 22,
-                50, 60, 5, 12
-        };
-    }
-
     private static <T extends Number> T[] setupLargeArray(){
         System.out.println("Setting up large array.");
 

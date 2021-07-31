@@ -1,6 +1,7 @@
 package com.zimonishim;
 
 import com.zimonishim.GUI.MainGUI;
+import com.zimonishim.tests.TestRunner;
 import com.zimonishim.util.TestData;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -9,7 +10,19 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        new Thread(TestData::initLargeArray).start();
+        TestData.initLargeArray(); //We first generate the random integer array.
+        processStage(stage);
         new MainGUI(stage);
+    }
+
+    /**
+     * Sets various properties and actions for the stage, such as an icon and a onCloseRequest() to shutdown other threads.
+     */
+    private static void processStage(Stage stage){
+        //TODO: Set window icon here.
+
+        stage.setOnCloseRequest(e -> {
+            TestRunner.executor.shutdown();
+        });
     }
 }

@@ -2,9 +2,8 @@ package com.zimonishim.GUI;
 
 import com.zimonishim.GUI.resultTables.ResultsTableViewHelper;
 import com.zimonishim.GUI.resultTables.resultTypes.ResultEntry;
-import com.zimonishim.tests.AddTests;
-import com.zimonishim.tests.SortingTests;
-import com.zimonishim.util.CollectionsContainer;
+import com.zimonishim.tests.TestHandler;
+import com.zimonishim.tests.TestRunner;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -16,9 +15,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.Set;
+import java.util.Collection;
 
 public class MainGUI implements IGUI, IGUICallback {
 
@@ -29,8 +26,7 @@ public class MainGUI implements IGUI, IGUICallback {
     private TabPane mainTabPane = new TabPane();
     private BorderPane borderPane = new BorderPane();
     private Tab mainTab = new Tab("Main", borderPane);
-    private Button testListsButton = new Button("Test Lists");
-    private Button testSetButton = new Button("Test Set");
+    private Button testButton = new Button("Test Collections");
 
     //Results TabPane.
     private TabPane resultsTabPane = new TabPane();
@@ -44,6 +40,8 @@ public class MainGUI implements IGUI, IGUICallback {
 
     //Charts TabPane.
     private Tab chartsTab = new Tab("Charts");
+
+    private TestHandler testHandler = new TestHandler();
 
 
     public MainGUI(Stage stage) {
@@ -81,7 +79,7 @@ public class MainGUI implements IGUI, IGUICallback {
                 insertTab
         );
 
-        borderPane.setTop(new HBox(testListsButton, testSetButton));
+        borderPane.setTop(new HBox(testButton));
 
         //Adding it all together.
         this.mainTabPane.getTabs().addAll(
@@ -93,46 +91,24 @@ public class MainGUI implements IGUI, IGUICallback {
 
     @Override
     public void actionHandlingSetup() {
-        testListsButton.setOnAction(e -> {
-            CollectionsContainer.getLists().forEach(l -> {
-                List<Integer> list = null;
-
-                try {
-                    list = l.getClass().newInstance();
-                } catch (InstantiationException | IllegalAccessException instantiationException) {
-                    instantiationException.printStackTrace();
-                }
-                SortingTests.sortThread(list, Comparator.naturalOrder(), this).start();
-                AddTests.addAllThread(list, this).start();
-            });
-        });
-
-        testSetButton.setOnAction(e -> {
-            CollectionsContainer.getSets().forEach(s -> {
-                Set<Integer> set = null;
-
-                try {
-                    set = s.getClass().newInstance();
-                } catch (InstantiationException | IllegalAccessException instantiationException) {
-                    instantiationException.printStackTrace();
-                }
-
-                AddTests.addAllThread(set, this).start();
-            });
+        testButton.setOnAction(e -> { //TODO: Check whether this should be run on a separate thread.
+                TestRunner.runAllTests(testHandler, this);
         });
     }
 
     @Override
-    public void addSortResultsToGUI(ResultEntry resultEntry){
+    public void addSortResultsToGUI(Collection<ResultEntry> resultEntryCollection){
+        System.out.println("Starting adding all.");
         Platform.runLater(() -> {
-            sortTableView.getItems().add(resultEntry);
+            sortTableView.getItems().addAll(resultEntryCollection);
+            System.out.println("Done adding all.");
         });
     }
 
     @Override
-    public void addAddAllResultsToGUI(ResultEntry resultEntry) {
+    public void addAddAllResultsToGUI(Collection<ResultEntry> resultEntryCollection) {
         Platform.runLater(() -> {
-            addTableView.getItems().add(resultEntry);
+            addTableView.getItems().addAll(resultEntryCollection);
         });
     }
 }

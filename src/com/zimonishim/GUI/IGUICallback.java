@@ -2,6 +2,8 @@ package com.zimonishim.GUI;
 
 import com.zimonishim.GUI.resultTables.resultTypes.ResultEntry;
 
+import java.util.Collection;
+
 /**
  * Contains methods used by other threads to add elements to the GUI without throwing an IllegalStateException.
  * <p>
@@ -10,6 +12,6 @@ import com.zimonishim.GUI.resultTables.resultTypes.ResultEntry;
  * @see IllegalStateException
  */
 public interface IGUICallback {
-    void addSortResultsToGUI(ResultEntry resultEntry);
-    void addAddAllResultsToGUI(ResultEntry resultEntry);
+    void addSortResultsToGUI(Collection<ResultEntry> resultEntryCollection);
+    void addAddAllResultsToGUI(Collection<ResultEntry> resultEntryCollection);
 }

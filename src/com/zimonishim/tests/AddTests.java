@@ -1,6 +1,5 @@
 package com.zimonishim.tests;
 
-import com.zimonishim.GUI.IGUICallback;
 import com.zimonishim.GUI.resultTables.resultTypes.ResultEntry;
 
 import java.util.Arrays;
@@ -10,11 +9,11 @@ import static com.zimonishim.util.TestData.getBigArray;
 
 public class AddTests {
 
-    public static <T extends Number> Thread addAllThread(Collection<T> collection, IGUICallback callback){
+    public static <T extends Number> Thread addAllThread(Collection<T> collection, ITestCallback callback){
         return addAllThread(collection, Arrays.asList(getBigArray()), callback);
     }
 
-    public static <T extends Number> Thread addAllThread(Collection<T> collection, Collection<T> dataCollection, IGUICallback callback){
+    public static <T extends Number> Thread addAllThread(Collection<T> collection, Collection<T> dataCollection, ITestCallback callback){
         return new Thread(() -> {
             System.out.println("Clicked on testButton.");
             addAllTest(collection, dataCollection, callback);
@@ -22,7 +21,7 @@ public class AddTests {
         });
     }
 
-    public static <T extends Number> void addAllTest(Collection<T> collection, Collection<T> numbers, IGUICallback callback){
+    public static <T extends Number> void addAllTest(Collection<T> collection, Collection<T> numbers, ITestCallback callback){
 
         try {
             collection = collection.getClass().newInstance();
@@ -48,6 +47,6 @@ public class AddTests {
 
         Number[] copyOfAddedList = collection.toArray(new Number[0]);
 
-        callback.addAddAllResultsToGUI(new ResultEntry(listName, "Add All Numbers", copyOfUnaddedList, totalTime, copyOfAddedList));
+        callback.returnAddAllResult(new ResultEntry(listName, "Add All Numbers", copyOfUnaddedList, totalTime, copyOfAddedList));
     }
 }
