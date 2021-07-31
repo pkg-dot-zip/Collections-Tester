@@ -111,4 +111,11 @@ public class MainGUI implements IGUI, IGUICallback {
             addTableView.getItems().addAll(resultEntryCollection);
         });
     }
+
+    @Override
+    public void reloadCharts(Collection<ResultEntry> resultEntryCollection){
+        Platform.runLater(() -> {
+            chartsTab.setContent(ChartsHelper.getChartsPane(resultEntryCollection));
+        });
+    }
 }

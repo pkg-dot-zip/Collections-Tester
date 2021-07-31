@@ -17,9 +17,13 @@ public class TestRunner {
     public static ExecutorService executor = Executors.newFixedThreadPool(10); //This is public so we can setOnCloseRequest() in the Main class.
 
     public static synchronized void runAllTests(TestHandler testHandler, IGUICallback guiCallback){
+        runAllTests(testHandler, guiCallback, 10);
+    }
+
+    public static synchronized void runAllTests(TestHandler testHandler, IGUICallback guiCallback, int amountOfRuns){
         List<Future<?>> futures = new ArrayList<>();
 
-        for (int i = 0; i < 10; ++i){
+        for (int i = 0; i < amountOfRuns; ++i){
             Future<?> f = executor.submit(() -> {
                 System.out.println("Running.");
                 runListTests(testHandler);
@@ -29,10 +33,10 @@ public class TestRunner {
         }
 
         for(Future<?> future : futures) {
-            System.out.println("Finished feature");
 
             try {
                 future.get(); // This is a blocking call.
+                System.out.println("Finished feature");
             } catch (InterruptedException | ExecutionException e) {
                 e.printStackTrace();
             }
@@ -40,6 +44,8 @@ public class TestRunner {
 
         guiCallback.addAddAllResultsToGUI(testHandler.getAddAllResultEntryList());
         guiCallback.addSortResultsToGUI(testHandler.getSortingResultEntryList());
+
+        guiCallback.reloadCharts(testHandler.getAddAllResultEntryList());
     }
 
     public static void runListTests(ITestCallback testHandler){
