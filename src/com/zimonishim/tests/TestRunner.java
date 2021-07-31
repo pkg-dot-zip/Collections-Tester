@@ -2,11 +2,9 @@ package com.zimonishim.tests;
 
 import com.zimonishim.GUI.IGUICallback;
 import com.zimonishim.util.CollectionsContainer;
+import com.zimonishim.util.TestData;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -44,6 +42,7 @@ public class TestRunner {
 
         guiCallback.addAddAllResultsToGUI(testHandler.getAddAllResultEntryList());
         guiCallback.addSortResultsToGUI(testHandler.getSortingResultEntryList());
+        guiCallback.addRemoveResultsToGUI(testHandler.getRemoveResultEntryList());
 
         guiCallback.reloadCharts(testHandler.getAddAllResultEntryList());
     }
@@ -79,6 +78,23 @@ public class TestRunner {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+
+            list = null;
+            try {
+                list = l.getClass().newInstance();
+            } catch (InstantiationException | IllegalAccessException instantiationException) {
+                instantiationException.printStackTrace();
+            }
+
+            list.addAll(Arrays.asList(TestData.getBigArray()));
+
+            Thread removeThread = RemoveTests.removeThread(list, testHandler);
+            removeThread.start();
+            try {
+                removeThread.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         });
     }
 
@@ -96,6 +112,22 @@ public class TestRunner {
             addAllThread.start();
             try {
                 addAllThread.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            set = null;
+            try {
+                set = s.getClass().newInstance();
+            } catch (InstantiationException | IllegalAccessException instantiationException) {
+                instantiationException.printStackTrace();
+            }
+
+            set.addAll(Arrays.asList(TestData.getBigArray()));
+            Thread removeThread = RemoveTests.removeThread(set, testHandler);
+            removeThread.start();
+            try {
+                removeThread.join();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

@@ -33,8 +33,9 @@ public class MainGUI implements IGUI, IGUICallback {
     private Tab resultsTab = new Tab("Results", resultsTabPane);
     private TableView<ResultEntry> sortTableView = ResultsTableViewHelper.getResultsTableView();
     private TableView<ResultEntry> addTableView = ResultsTableViewHelper.getResultsTableView();
+    private TableView<ResultEntry> removeTableView = ResultsTableViewHelper.getResultsTableView();
     private Tab sortTab = new Tab("Sort", sortTableView);
-    private Tab removeTab = new Tab("Remove");
+    private Tab removeTab = new Tab("Remove", removeTableView);
     private Tab addTab = new Tab("Add", addTableView);
     private Tab insertTab = new Tab("Insert");
 
@@ -109,6 +110,13 @@ public class MainGUI implements IGUI, IGUICallback {
     public void addAddAllResultsToGUI(Collection<ResultEntry> resultEntryCollection) {
         Platform.runLater(() -> {
             addTableView.getItems().addAll(resultEntryCollection);
+        });
+    }
+
+    @Override
+    public void addRemoveResultsToGUI(Collection<ResultEntry> resultEntryCollection) {
+        Platform.runLater(() -> {
+            removeTableView.getItems().addAll(resultEntryCollection);
         });
     }
 

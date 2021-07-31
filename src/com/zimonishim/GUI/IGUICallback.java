@@ -14,5 +14,6 @@ import java.util.Collection;
 public interface IGUICallback {
     void addSortResultsToGUI(Collection<ResultEntry> resultEntryCollection);
     void addAddAllResultsToGUI(Collection<ResultEntry> resultEntryCollection);
+    void addRemoveResultsToGUI(Collection<ResultEntry> resultEntryCollection);
     void reloadCharts(Collection<ResultEntry> resultEntryCollection);
 }
