@@ -1,6 +1,7 @@
 package com.zimonishim.tests;
 
 import com.zimonishim.GUI.IGUICallback;
+import com.zimonishim.GUI.resultTables.resultTypes.ResultEntry;
 import com.zimonishim.util.CollectionsContainer;
 import com.zimonishim.util.TestData;
 
@@ -44,7 +45,12 @@ public class TestRunner {
         guiCallback.addSortResultsToGUI(testHandler.getSortingResultEntryList());
         guiCallback.addRemoveResultsToGUI(testHandler.getRemoveResultEntryList());
 
-        guiCallback.reloadCharts(testHandler.getAddAllResultEntryList());
+        Map<String, Collection<ResultEntry>> results = new HashMap<>(5);
+        results.put("Add All", testHandler.getAddAllResultEntryList());
+        results.put("Sort Natural", testHandler.getSortingResultEntryList());
+        results.put("Remove", testHandler.getRemoveResultEntryList());
+
+        guiCallback.reloadCharts(results);
     }
 
     public static void runListTests(ITestCallback testHandler){

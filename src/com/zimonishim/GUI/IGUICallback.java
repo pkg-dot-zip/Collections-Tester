@@ -3,6 +3,7 @@ package com.zimonishim.GUI;
 import com.zimonishim.GUI.resultTables.resultTypes.ResultEntry;
 
 import java.util.Collection;
+import java.util.Map;
 
 /**
  * Contains methods used by other threads to add elements to the GUI without throwing an IllegalStateException.
@@ -15,5 +16,5 @@ public interface IGUICallback {
     void addSortResultsToGUI(Collection<ResultEntry> resultEntryCollection);
     void addAddAllResultsToGUI(Collection<ResultEntry> resultEntryCollection);
     void addRemoveResultsToGUI(Collection<ResultEntry> resultEntryCollection);
-    void reloadCharts(Collection<ResultEntry> resultEntryCollection);
+    void reloadCharts(Map<String, Collection<ResultEntry>> results);
 }

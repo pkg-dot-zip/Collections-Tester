@@ -8,15 +8,16 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 
 import java.util.Collection;
+import java.util.Map;
 
 public class ChartsHelper {
 
-    public static Pane getChartsPane(Collection<ResultEntry> results){
+    public static Pane getChartsPane(Map<String, Collection<ResultEntry>> results){
         TilePane tilePane = new TilePane();
 
-        tilePane.getChildren().addAll(
-                getChartScrollPane(getBarChart(results))
-        );
+        results.forEach((s, resultEntryCollection) -> {
+            tilePane.getChildren().add(getChartScrollPane(getBarChart(s, resultEntryCollection)));
+        });
 
         return tilePane;
     }
@@ -35,7 +36,7 @@ public class ChartsHelper {
         return scrollPane;
     }
 
-    private static BarChart<String, Number> getBarChart(Collection<ResultEntry> results){
+    private static BarChart<String, Number> getBarChart(String title, Collection<ResultEntry> results){
 
         //Setting the Axis.
         CategoryAxis xAxis = new CategoryAxis();
@@ -44,7 +45,9 @@ public class ChartsHelper {
         NumberAxis yAxis = new NumberAxis();
         yAxis.setLabel("Time in NS");
 
+        //Initializing the chart and setting the title.
         BarChart<String, Number> barChart = new BarChart<>(xAxis, yAxis);
+        barChart.setTitle(title);
 
         //Here we set the Data.
         XYChart.Series<String, Number> dataSeries1 = new XYChart.Series<>();

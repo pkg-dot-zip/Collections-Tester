@@ -16,6 +16,7 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
 import java.util.Collection;
+import java.util.Map;
 
 public class MainGUI implements IGUI, IGUICallback {
 
@@ -121,9 +122,9 @@ public class MainGUI implements IGUI, IGUICallback {
     }
 
     @Override
-    public void reloadCharts(Collection<ResultEntry> resultEntryCollection){
+    public void reloadCharts(Map<String, Collection<ResultEntry>> results){
         Platform.runLater(() -> {
-            chartsTab.setContent(ChartsHelper.getChartsPane(resultEntryCollection));
+            chartsTab.setContent(ChartsHelper.getChartsPane(results));
         });
     }
 }

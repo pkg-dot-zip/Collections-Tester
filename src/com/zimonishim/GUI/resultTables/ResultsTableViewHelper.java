@@ -8,6 +8,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.util.Arrays;
 
+//TODO: Don't put the entire test data in the cells. This is probably the cause of the lag.
+
 public class ResultsTableViewHelper {
 
     public static TableView<ResultEntry> getResultsTableView(){

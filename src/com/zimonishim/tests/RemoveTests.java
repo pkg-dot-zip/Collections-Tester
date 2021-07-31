@@ -25,8 +25,6 @@ public class RemoveTests {
 
         String listName = collection.getClass().getSimpleName();
 
-        System.out.println("Collections contains on init: " + collection + " for " + listName);
-
         System.out.println("Now testing " + listName + ".");
 
         Number[] copyOfInitialList = collection.toArray(new Number[0]);
