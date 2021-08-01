@@ -94,7 +94,7 @@ public class MainGUI implements IGUI, IGUICallback {
     @Override
     public void actionHandlingSetup() {
         testButton.setOnAction(e -> { //TODO: Check whether this should be run on a separate thread.
-                TestRunner.runAllTests(testHandler, this);
+                TestRunner.runAllTests(testHandler, this, 40);
         });
     }
 
