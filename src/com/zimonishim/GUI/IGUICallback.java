@@ -1,6 +1,7 @@
 package com.zimonishim.GUI;
 
 import com.zimonishim.GUI.resultTables.resultTypes.ResultEntry;
+import com.zimonishim.tests.TestHandler;
 
 import java.util.Collection;
 import java.util.Map;
@@ -17,4 +18,6 @@ public interface IGUICallback {
     void addAddAllResultsToGUI(Collection<ResultEntry> resultEntryCollection);
     void addRemoveResultsToGUI(Collection<ResultEntry> resultEntryCollection);
     void reloadCharts(Map<String, Collection<ResultEntry>> results);
+
+    void refresh(TestHandler testHandler);
 }

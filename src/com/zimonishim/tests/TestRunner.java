@@ -43,11 +43,7 @@ public class TestRunner {
             }
         }
 
-        guiCallback.addAddAllResultsToGUI(testHandler.getAddAllResultEntryList());
-        guiCallback.addSortResultsToGUI(testHandler.getSortingResultEntryList());
-        guiCallback.addRemoveResultsToGUI(testHandler.getRemoveResultEntryList());
-
-        guiCallback.reloadCharts(TestHandler.getResultsMap(testHandler));
+        guiCallback.refresh(testHandler);
     }
 
     public static void runListTests(ITestCallback testHandler){

@@ -4,6 +4,7 @@ import com.zimonishim.GUI.resultTables.ResultsTableViewHelper;
 import com.zimonishim.GUI.resultTables.resultTypes.ResultEntry;
 import com.zimonishim.tests.TestHandler;
 import com.zimonishim.tests.TestRunner;
+import com.zimonishim.util.SaveHandler;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -11,7 +12,6 @@ import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
-import java.io.*;
 import java.util.Collection;
 import java.util.Map;
 
@@ -119,49 +119,14 @@ public class MainGUI implements IGUI, IGUICallback {
     }
 
     private void menuBarActionHandlingSetup() {
-        openMenu.setOnAction(e -> {
-            try {
-                FileInputStream fileInputStream = new FileInputStream("test.dat");
-                ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-
-                long startTime = System.nanoTime();
-                testHandler = (TestHandler) objectInputStream.readObject();
-                long endTime = System.nanoTime();
-                System.out.println("Total time for reading TestHandler: " + (endTime - startTime));
-
-                System.out.println(testHandler.getAddAllResultEntryList().size());
-
-            } catch (IOException | ClassNotFoundException ioException) {
-                ioException.printStackTrace();
-            }
-
-            long startTime = System.nanoTime();
-            refresh();
-            long endTime = System.nanoTime();
-            System.out.println("Total time for refreshing: " + (endTime - startTime));
-        });
-
-        saveMenu.setOnAction(e -> {
-            try {
-                FileOutputStream fileOutputStream = new FileOutputStream("test.dat");
-                ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
-
-                long startTime = System.nanoTime();
-                objectOutputStream.writeObject(testHandler);
-                long endTime = System.nanoTime();
-                System.out.println("Total time for writing TestHandler: " + (endTime - startTime));
-            } catch (IOException ioException) {
-                ioException.printStackTrace();
-            }
-        });
+        openMenu.setOnAction(e -> SaveHandler.AsObject.read(this));
+        saveMenu.setOnAction(e -> SaveHandler.AsObject.write(testHandler));
     }
 
     @Override
     public void addSortResultsToGUI(Collection<ResultEntry> resultEntryCollection){
-        System.out.println("Starting adding all.");
         Platform.runLater(() -> {
             sortTableView.getItems().addAll(resultEntryCollection);
-            System.out.println("Done adding all.");
         });
     }
 
@@ -186,8 +151,8 @@ public class MainGUI implements IGUI, IGUICallback {
         });
     }
 
-    //TODO: Put this in the Callback.
-    private void refresh(){
+    @Override
+    public void refresh(TestHandler testHandler){
         addAddAllResultsToGUI(testHandler.getAddAllResultEntryList());
         addSortResultsToGUI(testHandler.getSortingResultEntryList());
         addRemoveResultsToGUI(testHandler.getRemoveResultEntryList());
