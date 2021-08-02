@@ -2,9 +2,13 @@ package com.zimonishim.tests;
 
 import com.zimonishim.GUI.resultTables.resultTypes.ResultEntry;
 
+import java.io.Serializable;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Stack;
 
-public class TestHandler implements ITestCallback {
+public class TestHandler implements ITestCallback, Serializable {
 
     private final Stack<ResultEntry> sortingResultEntryList = new Stack<>();
     private final Stack<ResultEntry> addAllResultEntryList = new Stack<>();
@@ -20,6 +24,14 @@ public class TestHandler implements ITestCallback {
 
     public Stack<ResultEntry> getRemoveResultEntryList() {
         return this.removeResultEntryList;
+    }
+
+    public static Map<String, Collection<ResultEntry>> getResultsMap(TestHandler testHandler) {
+        Map<String, Collection<ResultEntry>> results = new HashMap<>(5);
+        results.put("Add All", testHandler.getAddAllResultEntryList());
+        results.put("Sort Natural", testHandler.getSortingResultEntryList());
+        results.put("Remove", testHandler.getRemoveResultEntryList());
+        return results;
     }
 
     @Override

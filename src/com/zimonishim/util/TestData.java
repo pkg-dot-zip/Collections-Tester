@@ -14,15 +14,18 @@ public class TestData {
         integers = setupLargeArray();
     }
 
+    //TODO: Optimize this method by not using collections here. -> Replace collections with arrays.
     private static <T extends Number> T[] setupLargeArray(){
+        final int dataAmount = 10000;
+
         Random random = new Random();
 
         System.out.println("Setting up large array.");
 
-        List<Integer> list = new ArrayList<>();
+        List<Integer> list = new ArrayList<>(dataAmount);
         Set<Integer> set = new HashSet<>();
 
-        for (int i = 0; i < 100000; i++){
+        for (int i = 0; i < dataAmount; i++){
 
             //2.5 chance that we add it to the set of random integers.
             double rolledDice = random.nextDouble();

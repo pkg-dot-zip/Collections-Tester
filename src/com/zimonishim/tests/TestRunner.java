@@ -1,7 +1,6 @@
 package com.zimonishim.tests;
 
 import com.zimonishim.GUI.IGUICallback;
-import com.zimonishim.GUI.resultTables.resultTypes.ResultEntry;
 import com.zimonishim.util.CollectionsContainer;
 import com.zimonishim.util.TestData;
 
@@ -12,6 +11,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 public class TestRunner {
+
+    //NOTE: https://gist.github.com/psayre23/c30a821239f4818b0709
 
     public static ExecutorService executor = Executors.newFixedThreadPool(10); //This is public so we can setOnCloseRequest() in the Main class.
 
@@ -45,12 +46,7 @@ public class TestRunner {
         guiCallback.addSortResultsToGUI(testHandler.getSortingResultEntryList());
         guiCallback.addRemoveResultsToGUI(testHandler.getRemoveResultEntryList());
 
-        Map<String, Collection<ResultEntry>> results = new HashMap<>(5);
-        results.put("Add All", testHandler.getAddAllResultEntryList());
-        results.put("Sort Natural", testHandler.getSortingResultEntryList());
-        results.put("Remove", testHandler.getRemoveResultEntryList());
-
-        guiCallback.reloadCharts(results);
+        guiCallback.reloadCharts(TestHandler.getResultsMap(testHandler));
     }
 
     public static void runListTests(ITestCallback testHandler){

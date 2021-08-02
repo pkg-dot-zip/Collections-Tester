@@ -7,14 +7,11 @@ import com.zimonishim.tests.TestRunner;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
+import java.io.*;
 import java.util.Collection;
 import java.util.Map;
 
@@ -22,6 +19,8 @@ public class MainGUI implements IGUI, IGUICallback {
 
     private final Stage stage;
     private Scene scene;
+
+    private BorderPane topBorderPane = new BorderPane();
 
     //Main TabPane.
     private TabPane mainTabPane = new TabPane();
@@ -45,6 +44,12 @@ public class MainGUI implements IGUI, IGUICallback {
 
     private TestHandler testHandler = new TestHandler();
 
+    //MenuBar.
+    private MenuBar menuBar = new MenuBar();
+    private Menu fileMenu = new Menu("File");
+    private MenuItem openMenu = new Menu("Open");
+    private MenuItem saveMenu = new Menu("Save");
+
 
     public MainGUI(Stage stage) {
         this.stage = stage;
@@ -56,7 +61,7 @@ public class MainGUI implements IGUI, IGUICallback {
         setup();
         actionHandlingSetup();
 
-        this.scene = new Scene(mainTabPane);
+        this.scene = new Scene(topBorderPane);
         this.stage.setScene(scene);
         this.stage.setTitle("Collections Tester");
         this.stage.setMaximized(true);
@@ -70,6 +75,8 @@ public class MainGUI implements IGUI, IGUICallback {
         this.mainTabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
         this.resultsTabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
 
+        menuBarSetup();
+
         //Alignment & Spacing.
         this.borderPane.setPadding(new Insets(2));
 
@@ -81,20 +88,71 @@ public class MainGUI implements IGUI, IGUICallback {
                 insertTab
         );
 
-        borderPane.setTop(new HBox(testButton));
+        borderPane.setTop(testButton);
 
-        //Adding it all together.
         this.mainTabPane.getTabs().addAll(
                 mainTab,
                 resultsTab,
                 chartsTab
         );
+
+        //Adding it all together.
+        topBorderPane.setTop(menuBar);
+        topBorderPane.setCenter(mainTabPane);
+    }
+
+    private void menuBarSetup(){
+        fileMenu.getItems().addAll(openMenu, saveMenu);
+
+        menuBar.getMenus().add(fileMenu);
     }
 
     @Override
     public void actionHandlingSetup() {
-        testButton.setOnAction(e -> { //TODO: Check whether this should be run on a separate thread.
-                TestRunner.runAllTests(testHandler, this, 40);
+        menuBarActionHandlingSetup();
+
+        testButton.setOnAction(e -> {
+                new Thread(() -> {
+                    TestRunner.runAllTests(testHandler, this);
+                }).start();
+        });
+    }
+
+    private void menuBarActionHandlingSetup() {
+        openMenu.setOnAction(e -> {
+            try {
+                FileInputStream fileInputStream = new FileInputStream("test.dat");
+                ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+
+                long startTime = System.nanoTime();
+                testHandler = (TestHandler) objectInputStream.readObject();
+                long endTime = System.nanoTime();
+                System.out.println("Total time for reading TestHandler: " + (endTime - startTime));
+
+                System.out.println(testHandler.getAddAllResultEntryList().size());
+
+            } catch (IOException | ClassNotFoundException ioException) {
+                ioException.printStackTrace();
+            }
+
+            long startTime = System.nanoTime();
+            refresh();
+            long endTime = System.nanoTime();
+            System.out.println("Total time for refreshing: " + (endTime - startTime));
+        });
+
+        saveMenu.setOnAction(e -> {
+            try {
+                FileOutputStream fileOutputStream = new FileOutputStream("test.dat");
+                ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+
+                long startTime = System.nanoTime();
+                objectOutputStream.writeObject(testHandler);
+                long endTime = System.nanoTime();
+                System.out.println("Total time for writing TestHandler: " + (endTime - startTime));
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
         });
     }
 
@@ -126,5 +184,13 @@ public class MainGUI implements IGUI, IGUICallback {
         Platform.runLater(() -> {
             chartsTab.setContent(ChartsHelper.getChartsPane(results));
         });
+    }
+
+    //TODO: Put this in the Callback.
+    private void refresh(){
+        addAddAllResultsToGUI(testHandler.getAddAllResultEntryList());
+        addSortResultsToGUI(testHandler.getSortingResultEntryList());
+        addRemoveResultsToGUI(testHandler.getRemoveResultEntryList());
+        reloadCharts(TestHandler.getResultsMap(testHandler));
     }
 }

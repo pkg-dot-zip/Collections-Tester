@@ -37,6 +37,45 @@ public class StatisticsHelper {
             }
         }
 
+        allTimes.forEach((s, longs) -> {
+            System.out.println("Now processing " + s + ".");
+            processStandardDeviation(longs);
+        });
+
         return allTimes;
+    }
+
+    private static void processStandardDeviation(Set<Long> results){
+
+        List<Long> list = new ArrayList<>(results);
+
+        double[] doubles = new double[results.size()];
+        for (int i = 0; i < results.size(); i++) {
+            doubles[i] = list.get(i);
+        }
+
+        System.out.println("Standard deviation: " + calculateStandardDeviation(doubles));
+    }
+
+    public static double calculateStandardDeviation(double[] input) {
+        double n = input.length, sum = 0, mean;
+
+        for (int i = 0; i < n; i++) {
+            sum = sum + input[i];
+        }
+
+        mean = sum / n;
+        System.out.println("Mean: " + mean);
+        sum = 0;
+
+        for (int i = 0; i < n; i++) {
+            sum += Math.pow((input[i] - mean), 2);
+        }
+
+        mean = sum / (n - 1);
+        double deviation = Math.sqrt(mean);
+        System.out.println("Standard Deviation: " + deviation);
+
+        return deviation;
     }
 }

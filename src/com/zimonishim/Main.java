@@ -8,6 +8,9 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
+    //TODO: Look at standard deviation for multi- and singlethreading.
+    //TODO: Take a look at Box Plots.
+
     @Override
     public void start(Stage stage) throws Exception {
         TestData.initLargeArray(); //We first generate the random integer array.
