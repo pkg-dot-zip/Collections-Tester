@@ -71,14 +71,14 @@ public class ResultsTableViewHelper {
         TableColumn<ResultEntry, String> actionNameColumn = new TableColumn<>("Action Name");
         actionNameColumn.setCellValueFactory(new PropertyValueFactory<>("actionName"));
 
-        TableColumn<ResultEntry, Number[]> beforeArrayColumn = new TableColumn<>("Before");
+        TableColumn<ResultEntry, int[]> beforeArrayColumn = new TableColumn<>("Before");
         beforeArrayColumn.setCellValueFactory(new PropertyValueFactory<>("beforeActionArray"));
         beforeArrayColumn.setCellFactory((tableColumn) -> arrayCell());
 
         TableColumn<ResultEntry, Long> totalTimeColumn = new TableColumn<>("Time");
         totalTimeColumn.setCellValueFactory(new PropertyValueFactory<>("totalTime"));
 
-        TableColumn<ResultEntry, Number[]> afterArrayColumn = new TableColumn<>("After");
+        TableColumn<ResultEntry, int[]> afterArrayColumn = new TableColumn<>("After");
         afterArrayColumn.setCellValueFactory(new PropertyValueFactory<>("afterActionArray"));
         afterArrayColumn.setCellFactory((tableColumn) -> arrayCell(((tableCell, item, empty, resultEntry) -> {
             if (!Arrays.equals(item, resultEntry.getBeforeActionArray())){
@@ -94,10 +94,10 @@ public class ResultsTableViewHelper {
         return tableView;
     }
 
-    private static TableCell<ResultEntry, Number[]> arrayCell(IUpdateItem updateItem){
-        return new TableCell<ResultEntry, Number[]>() {
+    private static TableCell<ResultEntry, int[]> arrayCell(IUpdateItem updateItem){
+        return new TableCell<ResultEntry, int[]>() {
             @Override
-            protected void updateItem(Number[] item, boolean empty) {
+            protected void updateItem(int[] item, boolean empty) {
                 super.updateItem(item, empty);
 
                 //TODO: Show first couple of entries instead of "Test".
@@ -118,11 +118,11 @@ public class ResultsTableViewHelper {
         };
     }
 
-    private static TableCell<ResultEntry, Number[]> arrayCell(){
+    private static TableCell<ResultEntry, int[]> arrayCell(){
         return arrayCell((tableCell, item, empty, resultEntry) -> {});
     }
 
     private interface IUpdateItem {
-        void onUpdate(TableCell<ResultEntry, Number[]> tableCell, Number[] item, boolean empty, ResultEntry resultEntry);
+        void onUpdate(TableCell<ResultEntry, int[]> tableCell, int[] item, boolean empty, ResultEntry resultEntry);
     }
 }

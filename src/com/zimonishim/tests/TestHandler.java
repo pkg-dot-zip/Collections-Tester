@@ -3,26 +3,23 @@ package com.zimonishim.tests;
 import com.zimonishim.GUI.resultTables.resultTypes.ResultEntry;
 
 import java.io.Serializable;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Stack;
+import java.util.*;
 
 public class TestHandler implements ITestCallback, Serializable {
 
-    private final Stack<ResultEntry> sortingResultEntryList = new Stack<>();
-    private final Stack<ResultEntry> addAllResultEntryList = new Stack<>();
-    private final Stack<ResultEntry> removeResultEntryList = new Stack<>();
+    private final Collection<ResultEntry> sortingResultEntryList = new Stack<>();
+    private final Collection<ResultEntry> addAllResultEntryList = new Stack<>();
+    private final Collection<ResultEntry> removeResultEntryList = new Stack<>();
 
-    public Stack<ResultEntry> getSortingResultEntryList() {
+    public Collection<ResultEntry> getSortingResultEntryList() {
         return this.sortingResultEntryList;
     }
 
-    public Stack<ResultEntry> getAddAllResultEntryList() {
+    public Collection<ResultEntry> getAddAllResultEntryList() {
         return this.addAllResultEntryList;
     }
 
-    public Stack<ResultEntry> getRemoveResultEntryList() {
+    public Collection<ResultEntry> getRemoveResultEntryList() {
         return this.removeResultEntryList;
     }
 

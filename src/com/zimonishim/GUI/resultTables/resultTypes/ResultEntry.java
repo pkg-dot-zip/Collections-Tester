@@ -9,15 +9,15 @@ public class ResultEntry implements Serializable {
 
     private final String collectionClassName;
     private final String actionName;
-    private final Number[] beforeActionArray;
+    private final int[] beforeActionArray;
     private final long totalTime;
-    private final Number[] afterActionArray;
+    private final int[] afterActionArray;
 
-    public ResultEntry(Class<?> collectionClass, String actionName, Number[] beforeActionArray, Long totalTime, Number[] afterActionArray) {
+    public ResultEntry(Class<?> collectionClass, String actionName, int[] beforeActionArray, Long totalTime, int[] afterActionArray) {
         this(collectionClass.getSimpleName(), actionName, beforeActionArray, totalTime, afterActionArray);
     }
 
-    public ResultEntry(String collectionClassName, String actionName, Number[] beforeActionArray, Long totalTime, Number[] afterActionArray) {
+    public ResultEntry(String collectionClassName, String actionName, int[] beforeActionArray, Long totalTime, int[] afterActionArray) {
         this.collectionClassName = collectionClassName;
         this.actionName = actionName;
         this.beforeActionArray = beforeActionArray;
@@ -33,7 +33,7 @@ public class ResultEntry implements Serializable {
         return this.actionName;
     }
 
-    public Number[] getBeforeActionArray() {
+    public int[] getBeforeActionArray() {
         return this.beforeActionArray;
     }
 
@@ -41,7 +41,7 @@ public class ResultEntry implements Serializable {
         return this.totalTime;
     }
 
-    public Number[] getAfterActionArray() {
+    public int[] getAfterActionArray() {
         return this.afterActionArray;
     }
 }

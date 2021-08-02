@@ -7,16 +7,16 @@ import java.util.*;
  */
 public class TestData {
 
-    private static Number[] integers; //Used as default collection content if none is specified.
-    private static Number[] toRemove; //Used ONLY by the RemoveTest.
+    private static int[] integers; //Used as default collection content if none is specified.
+    private static int[] toRemove; //Used ONLY by the RemoveTest.
 
     public static void initLargeArray(){
         integers = setupLargeArray();
     }
 
     //TODO: Optimize this method by not using collections here. -> Replace collections with arrays.
-    private static <T extends Number> T[] setupLargeArray(){
-        final int dataAmount = 10000;
+    private static int[] setupLargeArray(){
+        final int dataAmount = 100000;
 
         Random random = new Random();
 
@@ -37,17 +37,17 @@ public class TestData {
             list.add(i);
         }
 
-        toRemove = set.toArray(new Number[0]);
+        toRemove = set.stream().mapToInt(i -> i).toArray();
         Collections.shuffle(list);
 
-        return (T[]) list.toArray(new Integer[0]);
+        return list.stream().mapToInt(i -> i).toArray();
     }
 
-    public static <T extends Number> T[] getBigArray(){
-        return (T[]) integers;
+    public static int[] getBigArray(){
+        return integers;
     }
 
-    public static <T extends Number> T[] getRemoveArray(){
-        return (T[]) toRemove;
+    public static int[] getRemoveArray(){
+        return toRemove;
     }
 }

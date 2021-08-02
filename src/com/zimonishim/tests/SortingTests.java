@@ -13,19 +13,19 @@ import static com.zimonishim.util.TestData.getBigArray;
  */
 public class SortingTests {
 
-    public static <T extends Number> Thread sortThread(List<T> list, Comparator<T> comparator, ITestCallback callback){
+    public static Thread sortThread(List<Integer> list, Comparator<Integer> comparator, ITestCallback callback){
         return sortThread(list, getBigArray(), comparator, callback);
     }
 
-    public static <T extends Number> Thread sortThread(List<T> list, T[] dataArray, Comparator<T> comparator, ITestCallback callback){
+    public static Thread sortThread(List<Integer> list, int[] dataArray, Comparator<Integer> comparator, ITestCallback callback){
         return new Thread(() -> {
             System.out.println("Clicked on testButton.");
-            sortTest(list, dataArray, comparator, callback);
+            sortTest(list, Arrays.stream(dataArray).boxed().toArray(Integer[]::new), comparator, callback);
             System.out.println("Starting thread for " + list.getClass().getSimpleName() + ".");
         });
     }
 
-    public static <T extends Number> void sortTest(List<T> list, T[] dataArray, Comparator<T> comparator, ITestCallback callback){
+    public static void sortTest(List<Integer> list, Integer[] dataArray, Comparator<Integer> comparator, ITestCallback callback){
 
         try {
             list = list.getClass().newInstance();
@@ -39,7 +39,7 @@ public class SortingTests {
 
         list.addAll(Arrays.asList(dataArray));
 
-        Number[] copyOfUnsortedList = list.toArray(new Number[0]);
+        int[] copyOfUnsortedList = list.stream().mapToInt(i -> i).toArray();
 
         long startTime = System.nanoTime();
 
@@ -50,7 +50,7 @@ public class SortingTests {
         long totalTime = endTime - startTime;
         System.out.println("Total time for sorting: " + totalTime + " ns.");
 
-        Number[] copyOfSortedList = list.toArray(new Number[0]);
+        int[] copyOfSortedList = list.stream().mapToInt(i -> i).toArray();
 
         callback.returnSortResult(new ResultEntry(listName, "Sort Natural Order", copyOfUnsortedList, totalTime, copyOfSortedList));
     }

@@ -9,6 +9,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.stream.Collectors;
 
 public class TestRunner {
 
@@ -88,7 +89,7 @@ public class TestRunner {
                 instantiationException.printStackTrace();
             }
 
-            list.addAll(Arrays.asList(TestData.getBigArray()));
+            list.addAll(Arrays.stream(TestData.getBigArray()).boxed().collect(Collectors.toList()));
 
             Thread removeThread = RemoveTests.removeThread(list, testHandler);
             removeThread.start();
@@ -125,7 +126,7 @@ public class TestRunner {
                 instantiationException.printStackTrace();
             }
 
-            set.addAll(Arrays.asList(TestData.getBigArray()));
+            set.addAll(Arrays.stream(TestData.getBigArray()).boxed().collect(Collectors.toList()));
             Thread removeThread = RemoveTests.removeThread(set, testHandler);
             removeThread.start();
             try {

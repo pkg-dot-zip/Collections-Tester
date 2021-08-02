@@ -85,7 +85,7 @@ public class ResultGUI implements IGUI {
         return resultTabPane;
     }
 
-    private TextArea arrayTextArea(Object[] array){
+    private TextArea arrayTextArea(int[] array){
         TextArea textArea = new TextArea();
         textArea.setPadding(new Insets(0, 10, 0, 0));
 

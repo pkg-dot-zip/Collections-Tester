@@ -4,30 +4,31 @@ import com.zimonishim.GUI.resultTables.resultTypes.ResultEntry;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 import static com.zimonishim.util.TestData.getRemoveArray;
 
 public class RemoveTests {
 
-    public static <T extends Number> Thread removeThread(Collection<T> collection, ITestCallback callback){
-        return removeThread(collection, Arrays.asList(getRemoveArray()), callback);
+    public static Thread removeThread(Collection<Integer> collection, ITestCallback callback){
+        return removeThread(collection, getRemoveArray(), callback);
     }
 
-    public static <T extends Number> Thread removeThread(Collection<T> collection, Collection<T> numbersToRemove, ITestCallback callback){
+    public static Thread removeThread(Collection<Integer> collection, int[] numbersToRemove, ITestCallback callback){
         return new Thread(() -> {
             System.out.println("Clicked on testButton.");
-            removeTest(collection, numbersToRemove, callback);
+            removeTest(collection, Arrays.stream(numbersToRemove).boxed().collect(Collectors.toList()), callback);
             System.out.println("Starting thread for " + collection.getClass().getSimpleName() + ".");
         });
     }
 
-    public static <T extends Number> void removeTest(Collection<T> collection, Collection<T> numbersToRemove, ITestCallback callback){
+    public static void removeTest(Collection<Integer> collection, Collection<Integer> numbersToRemove, ITestCallback callback){
 
         String listName = collection.getClass().getSimpleName();
 
         System.out.println("Now testing " + listName + ".");
 
-        Number[] copyOfInitialList = collection.toArray(new Number[0]);
+        int[] copyOfInitialList = collection.stream().mapToInt(i -> i).toArray();
 
         long startTime = System.nanoTime();
 
@@ -37,7 +38,7 @@ public class RemoveTests {
 
         long totalTime = endTime - startTime;
 
-        Number[] copyOfRemovedList = collection.toArray(new Number[0]);
+        int[] copyOfRemovedList = collection.stream().mapToInt(i -> i).toArray();
 
         callback.returnRemoveResult(new ResultEntry(listName, "Remove Numbers", copyOfInitialList, totalTime, copyOfRemovedList));
     }

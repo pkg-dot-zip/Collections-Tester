@@ -11,6 +11,9 @@ public class Main extends Application {
     //TODO: Look at standard deviation for multi- and singlethreading.
     //TODO: Take a look at Box Plots.
 
+    //TODO: Do less conversions of primitives to objects (and the otherway around) in tests. ->
+    // This also means that we should have less streams.
+
     @Override
     public void start(Stage stage) throws Exception {
         TestData.initLargeArray(); //We first generate the random integer array.
