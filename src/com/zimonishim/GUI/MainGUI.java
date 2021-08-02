@@ -47,6 +47,7 @@ public class MainGUI implements IGUI, IGUICallback {
 
     //MenuBar.
     private MenuBar menuBar = new MenuBar();
+        //FileMenu.
     private Menu fileMenu = new Menu("File");
     private MenuItem openMenuItem = new Menu("Open");
     private MenuItem insertMenuItem = new Menu("Insert");
@@ -105,7 +106,6 @@ public class MainGUI implements IGUI, IGUICallback {
 
     private void menuBarSetup(){
         fileMenu.getItems().addAll(openMenuItem, insertMenuItem, new SeparatorMenuItem(), saveMenuItem);
-
         menuBar.getMenus().add(fileMenu);
     }
 

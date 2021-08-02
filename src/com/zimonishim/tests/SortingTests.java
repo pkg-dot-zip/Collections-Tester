@@ -19,9 +19,7 @@ public class SortingTests {
 
     public static Thread sortThread(List<Integer> list, int[] dataArray, Comparator<Integer> comparator, ITestCallback callback){
         return new Thread(() -> {
-            System.out.println("Clicked on testButton.");
             sortTest(list, Arrays.stream(dataArray).boxed().toArray(Integer[]::new), comparator, callback);
-            System.out.println("Starting thread for " + list.getClass().getSimpleName() + ".");
         });
     }
 
@@ -32,10 +30,6 @@ public class SortingTests {
         } catch (InstantiationException | IllegalAccessException e) {
             e.printStackTrace();
         }
-
-        String listName = list.getClass().getSimpleName();
-
-        System.out.println("Now testing " + listName + ".");
 
         list.addAll(Arrays.asList(dataArray));
 
@@ -48,10 +42,9 @@ public class SortingTests {
         long endTime = System.nanoTime();
 
         long totalTime = endTime - startTime;
-        System.out.println("Total time for sorting: " + totalTime + " ns.");
 
         int[] copyOfSortedList = list.stream().mapToInt(i -> i).toArray();
 
-        callback.returnSortResult(new ResultEntry(listName, "Sort Natural Order", copyOfUnsortedList, totalTime, copyOfSortedList));
+        callback.returnSortResult(new ResultEntry(list.getClass().getSimpleName(), "Sort Natural Order", copyOfUnsortedList, totalTime, copyOfSortedList));
     }
 }

@@ -16,9 +16,7 @@ public class AddTests {
 
     public static Thread addAllThread(Collection<Integer> collection, int[] dataCollection, ITestCallback callback){
         return new Thread(() -> {
-            System.out.println("Clicked on testButton.");
             addAllTest(collection, Arrays.stream(dataCollection).boxed().collect(Collectors.toList()), callback);
-            System.out.println("Starting thread for " + collection.getClass().getSimpleName() + ".");
         });
     }
 
@@ -29,12 +27,6 @@ public class AddTests {
         } catch (InstantiationException | IllegalAccessException e) {
             e.printStackTrace();
         }
-
-        String listName = collection.getClass().getSimpleName();
-
-        System.out.println("Collections contains on init: " + collection + " for " + listName);
-
-        System.out.println("Now testing " + listName + ".");
 
         int[] copyOfUnaddedList = collection.stream().mapToInt(i -> i).toArray();
 
@@ -48,6 +40,6 @@ public class AddTests {
 
         int[] copyOfAddedList = collection.stream().mapToInt(i -> i).toArray();
 
-        callback.returnAddAllResult(new ResultEntry(listName, "Add All Numbers", copyOfUnaddedList, totalTime, copyOfAddedList));
+        callback.returnAddAllResult(new ResultEntry(collection.getClass().getSimpleName(), "Add All Numbers", copyOfUnaddedList, totalTime, copyOfAddedList));
     }
 }

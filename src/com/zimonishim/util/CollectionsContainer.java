@@ -4,7 +4,7 @@ import java.util.*;
 
 public class CollectionsContainer {
 
-    public static List<List> getLists(){
+    public static Collection<List> getLists(){
         return new ArrayList<>(Arrays.asList(
                 new ArrayList<>(),
                 new LinkedList<>(),
@@ -13,7 +13,7 @@ public class CollectionsContainer {
         ));
     }
 
-    public static List<Set> getSets(){
+    public static Collection<Set> getSets(){
         return new ArrayList<>(Arrays.asList(
                 new HashSet<>(),
                 new LinkedHashSet<>(),

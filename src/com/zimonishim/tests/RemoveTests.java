@@ -16,17 +16,11 @@ public class RemoveTests {
 
     public static Thread removeThread(Collection<Integer> collection, int[] numbersToRemove, ITestCallback callback){
         return new Thread(() -> {
-            System.out.println("Clicked on testButton.");
             removeTest(collection, Arrays.stream(numbersToRemove).boxed().collect(Collectors.toList()), callback);
-            System.out.println("Starting thread for " + collection.getClass().getSimpleName() + ".");
         });
     }
 
     public static void removeTest(Collection<Integer> collection, Collection<Integer> numbersToRemove, ITestCallback callback){
-
-        String listName = collection.getClass().getSimpleName();
-
-        System.out.println("Now testing " + listName + ".");
 
         int[] copyOfInitialList = collection.stream().mapToInt(i -> i).toArray();
 
@@ -40,6 +34,6 @@ public class RemoveTests {
 
         int[] copyOfRemovedList = collection.stream().mapToInt(i -> i).toArray();
 
-        callback.returnRemoveResult(new ResultEntry(listName, "Remove Numbers", copyOfInitialList, totalTime, copyOfRemovedList));
+        callback.returnRemoveResult(new ResultEntry(collection.getClass().getSimpleName(), "Remove Numbers", copyOfInitialList, totalTime, copyOfRemovedList));
     }
 }

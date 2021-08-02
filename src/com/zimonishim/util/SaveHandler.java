@@ -37,8 +37,6 @@ public class SaveHandler {
                 long endTime = System.nanoTime();
                 System.out.println("Total time for reading TestHandler: " + (endTime - startTime));
 
-                System.out.println("Size of AddAllResults for TestHandler: " + testHandler.getAddAllResultEntryList().size());
-
             } catch (IOException | ClassNotFoundException ioException) {
                 ioException.printStackTrace();
             }
@@ -55,7 +53,6 @@ public class SaveHandler {
 
     public static TestHandler mergeTestHandlers(Collection<TestHandler> testHandlers){
         if (testHandlers.size() < 2) {
-            System.out.println("Not enough entries to merge.");
             return new TestHandler();
         }
 
@@ -64,11 +61,9 @@ public class SaveHandler {
 
     public static TestHandler mergeTestHandlers(TestHandler[] testHandlers){
         if (testHandlers.length == 2){
-            System.out.println("That was the last iteration. Returning.");
             return mergeTestHandler(testHandlers[0], testHandlers[1]);
         }
 
-        System.out.println("Going for an iteration.");
         return mergeTestHandlers(processIteration(testHandlers, testHandlers[1]));
     }
 

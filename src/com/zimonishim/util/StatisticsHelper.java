@@ -58,7 +58,9 @@ public class StatisticsHelper {
     }
 
     public static double calculateStandardDeviation(double[] input) {
-        double n = input.length, sum = 0, mean;
+        double n = input.length;
+        double sum = 0;
+        double mean;
 
         for (int i = 0; i < n; i++) {
             sum = sum + input[i];
