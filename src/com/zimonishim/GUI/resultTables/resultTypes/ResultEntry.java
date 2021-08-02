@@ -37,7 +37,7 @@ public class ResultEntry implements Serializable {
         return this.beforeActionArray;
     }
 
-    public Long getTotalTime() {
+    public long getTotalTime() {
         return this.totalTime;
     }
 

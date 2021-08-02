@@ -12,6 +12,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Map;
 
@@ -47,8 +48,9 @@ public class MainGUI implements IGUI, IGUICallback {
     //MenuBar.
     private MenuBar menuBar = new MenuBar();
     private Menu fileMenu = new Menu("File");
-    private MenuItem openMenu = new Menu("Open");
-    private MenuItem saveMenu = new Menu("Save");
+    private MenuItem openMenuItem = new Menu("Open");
+    private MenuItem insertMenuItem = new Menu("Insert");
+    private MenuItem saveMenuItem = new Menu("Save");
 
 
     public MainGUI(Stage stage) {
@@ -102,7 +104,7 @@ public class MainGUI implements IGUI, IGUICallback {
     }
 
     private void menuBarSetup(){
-        fileMenu.getItems().addAll(openMenu, saveMenu);
+        fileMenu.getItems().addAll(openMenuItem, insertMenuItem, new SeparatorMenuItem(), saveMenuItem);
 
         menuBar.getMenus().add(fileMenu);
     }
@@ -119,8 +121,16 @@ public class MainGUI implements IGUI, IGUICallback {
     }
 
     private void menuBarActionHandlingSetup() {
-        openMenu.setOnAction(e -> SaveHandler.AsObject.read(this));
-        saveMenu.setOnAction(e -> SaveHandler.AsObject.write(testHandler));
+        openMenuItem.setOnAction(e -> refresh(SaveHandler.AsObject.read()));
+        insertMenuItem.setOnAction(e -> {
+            this.testHandler = SaveHandler.mergeTestHandlers(Arrays.asList(
+                    SaveHandler.AsObject.read(),
+                    testHandler
+            ));
+
+            refresh(this.testHandler);
+        });
+        saveMenuItem.setOnAction(e -> SaveHandler.AsObject.write(testHandler));
     }
 
     @Override
@@ -153,9 +163,14 @@ public class MainGUI implements IGUI, IGUICallback {
 
     @Override
     public void refresh(TestHandler testHandler){
+        long startTime = System.nanoTime();
+
         addAddAllResultsToGUI(testHandler.getAddAllResultEntryList());
         addSortResultsToGUI(testHandler.getSortingResultEntryList());
         addRemoveResultsToGUI(testHandler.getRemoveResultEntryList());
         reloadCharts(TestHandler.getResultsMap(testHandler));
+
+        long endTime = System.nanoTime();
+        System.out.println("Total time for refreshing: " + (endTime - startTime));
     }
 }

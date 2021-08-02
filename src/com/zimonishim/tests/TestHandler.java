@@ -48,4 +48,16 @@ public class TestHandler implements ITestCallback, Serializable {
     public synchronized void returnRemoveResult(ResultEntry resultEntry) {
         removeResultEntryList.add(resultEntry);
     }
+
+    public void addSortingResultCollection(Collection<ResultEntry> collection){
+        sortingResultEntryList.addAll(collection);
+    }
+
+    public void addAddAllResultCollection(Collection<ResultEntry> collection){
+        addAllResultEntryList.addAll(collection);
+    }
+
+    public void addRemoveResultEntryList(Collection<ResultEntry> collection){
+        removeResultEntryList.addAll(collection);
+    }
 }
