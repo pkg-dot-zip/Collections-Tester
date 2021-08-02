@@ -3,10 +3,7 @@ package com.zimonishim.tests;
 import com.zimonishim.GUI.resultTables.resultTypes.ResultEntry;
 
 import java.io.Serializable;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Stack;
+import java.util.*;
 
 public class TestHandler implements ITestCallback, Serializable {
 
@@ -57,7 +54,17 @@ public class TestHandler implements ITestCallback, Serializable {
         addAllResultEntryList.addAll(collection);
     }
 
-    public void addRemoveResultEntryList(Collection<ResultEntry> collection){
+    public void addRemoveResultCollection(Collection<ResultEntry> collection){
         removeResultEntryList.addAll(collection);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        TestHandler that = (TestHandler) o;
+        return Objects.equals(sortingResultEntryList, that.sortingResultEntryList) &&
+                Objects.equals(addAllResultEntryList, that.addAllResultEntryList) &&
+                Objects.equals(removeResultEntryList, that.removeResultEntryList);
     }
 }

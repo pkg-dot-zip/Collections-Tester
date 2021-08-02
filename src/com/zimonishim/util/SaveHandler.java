@@ -83,7 +83,7 @@ public class SaveHandler {
 
     public static TestHandler mergeTestHandler(TestHandler testHandler1, TestHandler testHandler2){
         testHandler1.addAddAllResultCollection(testHandler2.getAddAllResultEntryList());
-        testHandler1.addRemoveResultEntryList(testHandler2.getRemoveResultEntryList());
+        testHandler1.addRemoveResultCollection(testHandler2.getRemoveResultEntryList());
         testHandler1.addSortingResultCollection(testHandler2.getSortingResultEntryList());
 
         return testHandler1;
