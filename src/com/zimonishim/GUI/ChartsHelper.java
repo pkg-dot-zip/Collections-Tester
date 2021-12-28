@@ -56,9 +56,7 @@ public class ChartsHelper {
         dataSeries1.setName("Average"); //TODO: Make series for differentAmounts.
 
             //Retrieving data from StatisticsHelper.
-        StatisticsHelper.getAverageOfAllCollections(results).forEach((s, aLong) -> {
-            dataSeries1.getData().add(new XYChart.Data<>(s, aLong));
-        });
+        StatisticsHelper.getAverageOfAllCollections(results).forEach((s, aLong) -> dataSeries1.getData().add(new XYChart.Data<>(s, aLong)));
 
         barChart.getData().add(dataSeries1);
 

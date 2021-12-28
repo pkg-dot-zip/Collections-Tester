@@ -62,16 +62,16 @@ public class StatisticsHelper {
         double sum = 0;
         double mean;
 
-        for (int i = 0; i < n; i++) {
-            sum = sum + input[i];
+        for (double v : input) {
+            sum = sum + v;
         }
 
         mean = sum / n;
         System.out.println("Mean: " + mean);
         sum = 0;
 
-        for (int i = 0; i < n; i++) {
-            sum += Math.pow((input[i] - mean), 2);
+        for (double v : input) {
+            sum += Math.pow((v - mean), 2);
         }
 
         mean = sum / (n - 1);

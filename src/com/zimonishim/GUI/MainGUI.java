@@ -135,30 +135,22 @@ public class MainGUI implements IGUI, IGUICallback {
 
     @Override
     public void addSortResultsToGUI(Collection<ResultEntry> resultEntryCollection){
-        Platform.runLater(() -> {
-            sortTableView.getItems().addAll(resultEntryCollection);
-        });
+        Platform.runLater(() -> sortTableView.getItems().addAll(resultEntryCollection));
     }
 
     @Override
     public void addAddAllResultsToGUI(Collection<ResultEntry> resultEntryCollection) {
-        Platform.runLater(() -> {
-            addTableView.getItems().addAll(resultEntryCollection);
-        });
+        Platform.runLater(() -> addTableView.getItems().addAll(resultEntryCollection));
     }
 
     @Override
     public void addRemoveResultsToGUI(Collection<ResultEntry> resultEntryCollection) {
-        Platform.runLater(() -> {
-            removeTableView.getItems().addAll(resultEntryCollection);
-        });
+        Platform.runLater(() -> removeTableView.getItems().addAll(resultEntryCollection));
     }
 
     @Override
     public void reloadCharts(Map<String, Collection<ResultEntry>> results){
-        Platform.runLater(() -> {
-            chartsTab.setContent(ChartsHelper.getChartsPane(results));
-        });
+        Platform.runLater(() -> chartsTab.setContent(ChartsHelper.getChartsPane(results)));
     }
 
     @Override
