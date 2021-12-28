@@ -22,6 +22,7 @@ public class RemoveTests {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+            System.out.println("Done executing REMOVE for " + collection.getClass().getSimpleName());
         };
     }
 

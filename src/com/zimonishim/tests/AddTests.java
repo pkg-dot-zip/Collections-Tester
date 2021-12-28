@@ -22,6 +22,7 @@ public class AddTests {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+            System.out.println("Done executing ADD_ALL for " + collection.getClass().getSimpleName());
         };
     }
 

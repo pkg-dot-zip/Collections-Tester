@@ -25,6 +25,7 @@ public class SortingTests {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+            System.out.println("Done executing SORT for " + list.getClass().getSimpleName());
         };
     }
 

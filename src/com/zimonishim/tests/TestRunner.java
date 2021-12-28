@@ -6,6 +6,7 @@ import com.zimonishim.util.TestData;
 
 import java.util.*;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.stream.Collectors;
 
@@ -20,6 +21,7 @@ public class TestRunner {
     }
 
     public static synchronized void runAllTests(TestHandler testHandler, IGUICallback guiCallback, int amountOfRuns) {
+
         List<Runnable> runnables = new ArrayList<>();
 
         for (int i = 0; i < amountOfRuns; ++i) {
@@ -27,17 +29,25 @@ public class TestRunner {
             runnables.addAll(runSetTests(testHandler));
         }
 
-        runnables.forEach(threadPoolExecutor::submit);
+        // Submit runnable and add it to futures list.
+        List<Future<?>> futures = runnables.stream()
+                .map(threadPoolExecutor::submit)
+                .collect(Collectors.toList());
 
-        while (threadPoolExecutor.getCompletedTaskCount() > 0) {
-            System.out.println("Task count: " + threadPoolExecutor.getCompletedTaskCount());
-            try {
-                Thread.sleep(10);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+
+        // TODO: This is the reason why the application freezes for a bit. Fix this by not running this method in the main thread.
+        // Don't move on until al tasks are done.
+        boolean done = false;
+        while (!done) {
+            done = true;
+            for (Future<?> future : futures) {
+                if (!future.isDone()) {
+                    done = false;
+                }
             }
         }
 
+        System.out.println("Done executing tasks");
         guiCallback.refresh(testHandler);
     }
 
