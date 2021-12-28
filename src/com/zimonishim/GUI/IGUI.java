@@ -35,7 +35,7 @@ public interface IGUI {
     void setup();
 
     /**
-     * Sets EventHandling of <i>JavaFX</i> <code>Nodes</code>. Mostly <code>setOnAction</code>s for <code>Button</code>s.
+     * Sets EventHandling of <i>JavaFX</i> <code>Node</code>. Mostly <code>setOnAction()</code> for <code>Button</code>.
      */
     void actionHandlingSetup();
 }

@@ -100,8 +100,7 @@ public class ResultsTableViewHelper {
             protected void updateItem(int[] item, boolean empty) {
                 super.updateItem(item, empty);
 
-                //TODO: Show first couple of entries instead of "Test".
-                this.setText(!empty ? "Test" : null); //We set the cell's text to null if the cell is empty.
+                this.setText(empty ? null : "" + item.length); //We set the cell's text to null if the cell is empty.
 
                 //We check if can run the updateItem code. For this we need to have a valid item.
                 if (getTableRow() == null){

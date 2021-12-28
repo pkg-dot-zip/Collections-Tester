@@ -9,6 +9,7 @@ import java.util.Objects;
  */
 public class ResultEntry implements Serializable {
 
+    //TODO: Optimize by changing int[] to int[][], so we only have to store the Strings once.
     private final String collectionClassName;
     private final String actionName;
     private final int[] beforeActionArray;
