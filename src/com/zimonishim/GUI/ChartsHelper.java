@@ -13,7 +13,7 @@ import java.util.Set;
 
 public class ChartsHelper {
 
-    public static Pane getChartsPane(Map<String, Collection<ResultEntry>> results){
+    public static Pane getChartsPane(Map<String, Collection<ResultEntry>> results) {
         TilePane tilePane = new TilePane();
 
         results.forEach((s, resultEntryCollection) -> {
@@ -24,7 +24,7 @@ public class ChartsHelper {
         return tilePane;
     }
 
-    private static ScrollPane getChartScrollPane(Chart chart){
+    private static ScrollPane getChartScrollPane(Chart chart) {
         ScrollPane scrollPane = new ScrollPane(chart);
 
         scrollPane.maxHeight(500);
@@ -38,7 +38,7 @@ public class ChartsHelper {
         return scrollPane;
     }
 
-    private static BarChart<String, Number> getBarChart(String title, Collection<ResultEntry> results){
+    private static BarChart<String, Number> getBarChart(String title, Collection<ResultEntry> results) {
 
         //Setting the Axis.
         CategoryAxis xAxis = new CategoryAxis();
@@ -55,7 +55,7 @@ public class ChartsHelper {
         XYChart.Series<String, Number> dataSeries1 = new XYChart.Series<>();
         dataSeries1.setName("Average"); //TODO: Make series for differentAmounts.
 
-            //Retrieving data from StatisticsHelper.
+        //Retrieving data from StatisticsHelper.
         StatisticsHelper.getAverageOfAllCollections(results).forEach((s, aLong) -> dataSeries1.getData().add(new XYChart.Data<>(s, aLong)));
 
         barChart.getData().add(dataSeries1);
@@ -63,7 +63,7 @@ public class ChartsHelper {
         return barChart;
     }
 
-    private static ScatterChart<Number, Number> getScatterChart(String title, Collection<ResultEntry> results){
+    private static ScatterChart<Number, Number> getScatterChart(String title, Collection<ResultEntry> results) {
 
         //Setting the Axis.
         NumberAxis xAxis = new NumberAxis();

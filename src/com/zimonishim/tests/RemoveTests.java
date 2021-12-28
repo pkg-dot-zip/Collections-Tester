@@ -10,17 +10,17 @@ import static com.zimonishim.util.TestData.getRemoveArray;
 
 public class RemoveTests {
 
-    public static Thread removeThread(Collection<Integer> collection, ITestCallback callback){
+    public static Thread removeThread(Collection<Integer> collection, ITestCallback callback) {
         return removeThread(collection, getRemoveArray(), callback);
     }
 
-    public static Thread removeThread(Collection<Integer> collection, int[] numbersToRemove, ITestCallback callback){
+    public static Thread removeThread(Collection<Integer> collection, int[] numbersToRemove, ITestCallback callback) {
         return new Thread(() -> {
             removeTest(collection, Arrays.stream(numbersToRemove).boxed().collect(Collectors.toList()), callback);
         });
     }
 
-    public static void removeTest(Collection<Integer> collection, Collection<Integer> numbersToRemove, ITestCallback callback){
+    public static void removeTest(Collection<Integer> collection, Collection<Integer> numbersToRemove, ITestCallback callback) {
 
         int[] copyOfInitialList = collection.stream().mapToInt(i -> i).toArray();
 

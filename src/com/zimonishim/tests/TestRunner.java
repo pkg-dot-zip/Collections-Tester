@@ -17,14 +17,14 @@ public class TestRunner {
 
     public static ExecutorService executor = Executors.newFixedThreadPool(10); //This is public so we can setOnCloseRequest() in the Main class.
 
-    public static synchronized void runAllTests(TestHandler testHandler, IGUICallback guiCallback){
+    public static synchronized void runAllTests(TestHandler testHandler, IGUICallback guiCallback) {
         runAllTests(testHandler, guiCallback, 10);
     }
 
-    public static synchronized void runAllTests(TestHandler testHandler, IGUICallback guiCallback, int amountOfRuns){
+    public static synchronized void runAllTests(TestHandler testHandler, IGUICallback guiCallback, int amountOfRuns) {
         List<Future<?>> futures = new ArrayList<>();
 
-        for (int i = 0; i < amountOfRuns; ++i){
+        for (int i = 0; i < amountOfRuns; ++i) {
             Future<?> f = executor.submit(() -> {
                 System.out.println("Running.");
                 runListTests(testHandler);
@@ -33,7 +33,7 @@ public class TestRunner {
             futures.add(f);
         }
 
-        for(Future<?> future : futures) {
+        for (Future<?> future : futures) {
 
             try {
                 future.get(); // This is a blocking call.
@@ -46,7 +46,7 @@ public class TestRunner {
         guiCallback.refresh(testHandler);
     }
 
-    public static void runListTests(ITestCallback testHandler){
+    public static void runListTests(ITestCallback testHandler) {
         CollectionsContainer.getLists().forEach(l -> {
             List<Integer> list = null;
 
@@ -97,7 +97,7 @@ public class TestRunner {
         });
     }
 
-    public static void runSetTests(ITestCallback testHandler){
+    public static void runSetTests(ITestCallback testHandler) {
         CollectionsContainer.getSets().forEach(s -> {
             Set<Integer> set = null;
 

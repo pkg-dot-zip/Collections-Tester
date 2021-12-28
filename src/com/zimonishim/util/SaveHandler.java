@@ -9,9 +9,9 @@ import java.util.List;
 
 public class SaveHandler {
 
-    public static class AsObject{
+    public static class AsObject {
 
-        public static void write(TestHandler testHandler){
+        public static void write(TestHandler testHandler) {
             try {
                 FileOutputStream fileOutputStream = new FileOutputStream("test.dat");
                 ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
@@ -25,7 +25,7 @@ public class SaveHandler {
             }
         }
 
-        public static TestHandler read(){
+        public static TestHandler read() {
             TestHandler testHandler = null;
 
             try {
@@ -45,13 +45,7 @@ public class SaveHandler {
         }
     }
 
-    //TODO: Create a .txt or .json variant for saving data. This way we can use older data in newer versions of this software.
-    public static class AsText{
-
-    }
-
-
-    public static TestHandler mergeTestHandlers(Collection<TestHandler> testHandlers){
+    public static TestHandler mergeTestHandlers(Collection<TestHandler> testHandlers) {
         if (testHandlers.size() < 2) {
             return new TestHandler();
         }
@@ -59,15 +53,15 @@ public class SaveHandler {
         return mergeTestHandlers(testHandlers.toArray(new TestHandler[0]));
     }
 
-    public static TestHandler mergeTestHandlers(TestHandler[] testHandlers){
-        if (testHandlers.length == 2){
+    public static TestHandler mergeTestHandlers(TestHandler[] testHandlers) {
+        if (testHandlers.length == 2) {
             return mergeTestHandler(testHandlers[0], testHandlers[1]);
         }
 
         return mergeTestHandlers(processIteration(testHandlers, testHandlers[1]));
     }
 
-    private static TestHandler[] processIteration(TestHandler[] testHandlers, TestHandler testHandler){
+    private static TestHandler[] processIteration(TestHandler[] testHandlers, TestHandler testHandler) {
         testHandlers[0] = mergeTestHandler(testHandlers[0], testHandler); //NOTE: IntelliJ says that testHandlers[0] is already assigned this value. This is NOT true. Do not change this.
 
         List<TestHandler> testHandlerList = Arrays.asList(testHandlers);
@@ -76,7 +70,7 @@ public class SaveHandler {
         return testHandlerList.toArray(new TestHandler[0]);
     }
 
-    public static TestHandler mergeTestHandler(TestHandler testHandler1, TestHandler testHandler2){
+    public static TestHandler mergeTestHandler(TestHandler testHandler1, TestHandler testHandler2) {
         testHandler1.addAddAllResultCollection(testHandler2.getAddAllResultEntryList());
         testHandler1.addRemoveResultCollection(testHandler2.getRemoveResultEntryList());
         testHandler1.addSortingResultCollection(testHandler2.getSortingResultEntryList());

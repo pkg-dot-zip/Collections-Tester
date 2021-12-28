@@ -47,7 +47,7 @@ public class MainGUI implements IGUI, IGUICallback {
 
     //MenuBar.
     private MenuBar menuBar = new MenuBar();
-        //FileMenu.
+    //FileMenu.
     private Menu fileMenu = new Menu("File");
     private MenuItem openMenuItem = new Menu("Open");
     private MenuItem insertMenuItem = new Menu("Insert");
@@ -74,7 +74,7 @@ public class MainGUI implements IGUI, IGUICallback {
     @Override
     public void setup() {
         //Value init.
-            //TabPanes.
+        //TabPanes.
         this.mainTabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
         this.resultsTabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
 
@@ -104,7 +104,7 @@ public class MainGUI implements IGUI, IGUICallback {
         topBorderPane.setCenter(mainTabPane);
     }
 
-    private void menuBarSetup(){
+    private void menuBarSetup() {
         fileMenu.getItems().addAll(openMenuItem, insertMenuItem, new SeparatorMenuItem(), saveMenuItem);
         menuBar.getMenus().add(fileMenu);
     }
@@ -114,9 +114,9 @@ public class MainGUI implements IGUI, IGUICallback {
         menuBarActionHandlingSetup();
 
         testButton.setOnAction(e -> {
-                new Thread(() -> {
-                    TestRunner.runAllTests(testHandler, this);
-                }).start();
+            new Thread(() -> {
+                TestRunner.runAllTests(testHandler, this);
+            }).start();
         });
     }
 
@@ -134,7 +134,7 @@ public class MainGUI implements IGUI, IGUICallback {
     }
 
     @Override
-    public void addSortResultsToGUI(Collection<ResultEntry> resultEntryCollection){
+    public void addSortResultsToGUI(Collection<ResultEntry> resultEntryCollection) {
         Platform.runLater(() -> sortTableView.getItems().addAll(resultEntryCollection));
     }
 
@@ -149,12 +149,12 @@ public class MainGUI implements IGUI, IGUICallback {
     }
 
     @Override
-    public void reloadCharts(Map<String, Collection<ResultEntry>> results){
+    public void reloadCharts(Map<String, Collection<ResultEntry>> results) {
         Platform.runLater(() -> chartsTab.setContent(ChartsHelper.getChartsPane(results)));
     }
 
     @Override
-    public void refresh(TestHandler testHandler){
+    public void refresh(TestHandler testHandler) {
         long startTime = System.nanoTime();
 
         addAddAllResultsToGUI(testHandler.getAddAllResultEntryList());

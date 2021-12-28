@@ -10,12 +10,12 @@ public class TestData {
     private static int[] integers; //Used as default collection content if none is specified.
     private static int[] toRemove; //Used ONLY by the RemoveTest.
 
-    public static void initLargeArray(){
+    public static void initLargeArray() {
         integers = setupLargeArray();
     }
 
     //TODO: Optimize this method by not using collections here. -> Replace collections with arrays.
-    private static int[] setupLargeArray(){
+    private static int[] setupLargeArray() {
         final int dataAmount = 100000;
 
         Random random = new Random();
@@ -25,7 +25,7 @@ public class TestData {
         List<Integer> list = new ArrayList<>(dataAmount);
         Set<Integer> set = new HashSet<>();
 
-        for (int i = 0; i < dataAmount; i++){
+        for (int i = 0; i < dataAmount; i++) {
 
             //2.5 chance that we add it to the set of random integers.
             double rolledDice = random.nextDouble();
@@ -43,11 +43,11 @@ public class TestData {
         return list.stream().mapToInt(i -> i).toArray();
     }
 
-    public static int[] getBigArray(){
+    public static int[] getBigArray() {
         return integers;
     }
 
-    public static int[] getRemoveArray(){
+    public static int[] getRemoveArray() {
         return toRemove;
     }
 }

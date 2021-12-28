@@ -10,17 +10,17 @@ import static com.zimonishim.util.TestData.getBigArray;
 
 public class AddTests {
 
-    public static Thread addAllThread(Collection<Integer> collection, ITestCallback callback){
+    public static Thread addAllThread(Collection<Integer> collection, ITestCallback callback) {
         return addAllThread(collection, getBigArray(), callback);
     }
 
-    public static Thread addAllThread(Collection<Integer> collection, int[] dataCollection, ITestCallback callback){
+    public static Thread addAllThread(Collection<Integer> collection, int[] dataCollection, ITestCallback callback) {
         return new Thread(() -> {
             addAllTest(collection, Arrays.stream(dataCollection).boxed().collect(Collectors.toList()), callback);
         });
     }
 
-    public static void addAllTest(Collection<Integer> collection, Collection<Integer> numbers, ITestCallback callback){
+    public static void addAllTest(Collection<Integer> collection, Collection<Integer> numbers, ITestCallback callback) {
 
         try {
             collection = collection.getClass().newInstance();

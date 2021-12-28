@@ -13,17 +13,17 @@ import static com.zimonishim.util.TestData.getBigArray;
  */
 public class SortingTests {
 
-    public static Thread sortThread(List<Integer> list, Comparator<Integer> comparator, ITestCallback callback){
+    public static Thread sortThread(List<Integer> list, Comparator<Integer> comparator, ITestCallback callback) {
         return sortThread(list, getBigArray(), comparator, callback);
     }
 
-    public static Thread sortThread(List<Integer> list, int[] dataArray, Comparator<Integer> comparator, ITestCallback callback){
+    public static Thread sortThread(List<Integer> list, int[] dataArray, Comparator<Integer> comparator, ITestCallback callback) {
         return new Thread(() -> {
             sortTest(list, Arrays.stream(dataArray).boxed().toArray(Integer[]::new), comparator, callback);
         });
     }
 
-    public static void sortTest(List<Integer> list, Integer[] dataArray, Comparator<Integer> comparator, ITestCallback callback){
+    public static void sortTest(List<Integer> list, Integer[] dataArray, Comparator<Integer> comparator, ITestCallback callback) {
 
         try {
             list = list.getClass().newInstance();
