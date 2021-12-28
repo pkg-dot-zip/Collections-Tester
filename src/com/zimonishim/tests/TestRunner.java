@@ -61,12 +61,24 @@ public class TestRunner {
         Collection<Runnable> runnables = new ArrayList<>();
 
         CollectionsContainer.getLists().forEach(l -> {
-            runnables.add(TestCreator.createSortTest(l, Comparator.naturalOrder(), testHandler));
+
+            // TODO: Add support for different comparators -> Make different messages and graphs per comparator.
+            for (Comparator comparator : getComparatorsForSortingTests()) {
+                runnables.add(TestCreator.createSortTest(l, comparator, testHandler));
+            }
+
             runnables.add(TestCreator.createAddAllTest(l, testHandler));
             runnables.add(TestCreator.createRemoveTest(l, testHandler));
         });
 
         return runnables;
+    }
+
+    private static Comparator[] getComparatorsForSortingTests() {
+        return new Comparator[]{
+                Comparator.naturalOrder(),
+                Comparator.reverseOrder()
+        };
     }
 
     private static Collection<Runnable> getSetTests(ITestCallback testHandler) {
