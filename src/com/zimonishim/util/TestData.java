@@ -17,7 +17,7 @@ public class TestData {
     //TODO: Optimize this method by not using collections here. -> Replace collections with arrays.
     private static int[] setupLargeArray() {
 //        final int dataAmount = 100000;
-        final int dataAmount = 1_000;
+        final int dataAmount = 10_000;
 
         Random random = new Random();
 

@@ -113,7 +113,7 @@ public class MainGUI implements IGUI, IGUICallback {
     public void actionHandlingSetup() {
         menuBarActionHandlingSetup();
 
-        testButton.setOnAction(e -> TestRunner.runAllTests(testHandler, this));
+        testButton.setOnAction(e -> TestRunner.runAllTestsFromButton(testHandler, this));
     }
 
     private void menuBarActionHandlingSetup() {

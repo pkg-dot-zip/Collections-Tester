@@ -24,9 +24,12 @@ public class Main extends Application {
     /**
      * Sets various properties and actions for the stage, such as an icon and a onCloseRequest() to shutdown other threads.
      */
-    private static void processStage(Stage stage){
+    private static void processStage(Stage stage) {
         //TODO: Set window icon here.
 
-        stage.setOnCloseRequest(e -> TestRunner.threadPoolExecutor.shutdown());
+        stage.setOnCloseRequest(e -> {
+            TestRunner.EXECUTOR.shutdown();
+            TestRunner.THREAD_POOL_EXECUTOR.shutdown();
+        });
     }
 }

@@ -5,6 +5,7 @@ import com.zimonishim.util.CollectionsContainer;
 import com.zimonishim.util.TestData;
 
 import java.util.*;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -14,13 +15,19 @@ public class TestRunner {
 
     //NOTE: https://gist.github.com/psayre23/c30a821239f4818b0709
 
-    public static ThreadPoolExecutor threadPoolExecutor = (ThreadPoolExecutor) Executors.newFixedThreadPool(3);
+    public static final ExecutorService EXECUTOR = Executors.newSingleThreadExecutor(); // Used to run all the tests on -> Responsible for starting other threads as well.
+    public static final ThreadPoolExecutor THREAD_POOL_EXECUTOR = (ThreadPoolExecutor) Executors.newFixedThreadPool(3);
 
-    public static synchronized void runAllTests(TestHandler testHandler, IGUICallback guiCallback) {
+    public static synchronized void runAllTestsFromButton(TestHandler testHandler, IGUICallback callback) {
+        EXECUTOR.submit(() -> TestRunner.runAllTests(testHandler, callback));
+    }
+
+
+    private static synchronized void runAllTests(TestHandler testHandler, IGUICallback guiCallback) {
         runAllTests(testHandler, guiCallback, 10);
     }
 
-    public static synchronized void runAllTests(TestHandler testHandler, IGUICallback guiCallback, int amountOfRuns) {
+    private static synchronized void runAllTests(TestHandler testHandler, IGUICallback guiCallback, int amountOfRuns) {
         Collection<Runnable> runnables = new ArrayList<>();
 
         for (int i = 0; i < amountOfRuns; ++i) {
@@ -30,7 +37,7 @@ public class TestRunner {
 
         // Submit runnable and add it to futures list.
         List<Future<?>> futures = runnables.stream()
-                .map(threadPoolExecutor::submit)
+                .map(THREAD_POOL_EXECUTOR::submit)
                 .collect(Collectors.toList());
 
 
