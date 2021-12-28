@@ -47,13 +47,11 @@ public class ResultGUI implements IGUI {
         vBox.setSpacing(10);
 
         resultEntries.forEach(resultEntry -> vBox.getChildren().add(getEntryPane(resultEntry)));
-
         mainPane.setContent(vBox);
     }
 
     @Override
     public void actionHandlingSetup() {
-
     }
 
     private Pane getEntryPane(ResultEntry resultEntry) {

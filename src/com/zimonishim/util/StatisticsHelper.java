@@ -46,7 +46,6 @@ public class StatisticsHelper {
     }
 
     private static void processStandardDeviation(Set<Long> results) {
-
         List<Long> list = new ArrayList<>(results);
 
         double[] doubles = new double[results.size()];

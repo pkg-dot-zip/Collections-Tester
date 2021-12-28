@@ -21,37 +21,37 @@ public class MainGUI implements IGUI, IGUICallback {
     private final Stage stage;
     private Scene scene;
 
-    private BorderPane topBorderPane = new BorderPane();
+    private final BorderPane topBorderPane = new BorderPane();
 
     //Main TabPane.
-    private TabPane mainTabPane = new TabPane();
-    private BorderPane borderPane = new BorderPane();
-    private Tab mainTab = new Tab("Main", borderPane);
-    private Button testButton = new Button("Test Collections");
+    private final TabPane mainTabPane = new TabPane();
+    private final BorderPane borderPane = new BorderPane();
+    private final Tab mainTab = new Tab("Main", borderPane);
+    private final Button testButton = new Button("Test Collections");
 
     //Results TabPane.
-    private TabPane resultsTabPane = new TabPane();
-    private Tab resultsTab = new Tab("Results", resultsTabPane);
-    private TableView<ResultEntry> sortTableView = ResultsTableViewHelper.getResultsTableView();
-    private TableView<ResultEntry> addTableView = ResultsTableViewHelper.getResultsTableView();
-    private TableView<ResultEntry> removeTableView = ResultsTableViewHelper.getResultsTableView();
-    private Tab sortTab = new Tab("Sort", sortTableView);
-    private Tab removeTab = new Tab("Remove", removeTableView);
-    private Tab addTab = new Tab("Add", addTableView);
-    private Tab insertTab = new Tab("Insert");
+    private final TabPane resultsTabPane = new TabPane();
+    private final Tab resultsTab = new Tab("Results", resultsTabPane);
+    private final TableView<ResultEntry> sortTableView = ResultsTableViewHelper.getResultsTableView();
+    private final TableView<ResultEntry> addTableView = ResultsTableViewHelper.getResultsTableView();
+    private final TableView<ResultEntry> removeTableView = ResultsTableViewHelper.getResultsTableView();
+    private final Tab sortTab = new Tab("Sort", sortTableView);
+    private final Tab removeTab = new Tab("Remove", removeTableView);
+    private final Tab addTab = new Tab("Add", addTableView);
+    private final Tab insertTab = new Tab("Insert");
 
     //Charts TabPane.
-    private Tab chartsTab = new Tab("Charts");
+    private final Tab chartsTab = new Tab("Charts");
 
     private TestHandler testHandler = new TestHandler();
 
     //MenuBar.
-    private MenuBar menuBar = new MenuBar();
+    private final MenuBar menuBar = new MenuBar();
     //FileMenu.
-    private Menu fileMenu = new Menu("File");
-    private MenuItem openMenuItem = new Menu("Open");
-    private MenuItem insertMenuItem = new Menu("Insert");
-    private MenuItem saveMenuItem = new Menu("Save");
+    private final Menu fileMenu = new Menu("File");
+    private final MenuItem openMenuItem = new Menu("Open");
+    private final MenuItem insertMenuItem = new Menu("Insert");
+    private final MenuItem saveMenuItem = new Menu("Save");
 
 
     public MainGUI(Stage stage) {

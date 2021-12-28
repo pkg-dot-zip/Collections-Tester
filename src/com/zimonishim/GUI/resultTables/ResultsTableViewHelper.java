@@ -24,13 +24,9 @@ public class ResultsTableViewHelper {
             final MenuItem removeMenuItem = new MenuItem("Remove");
 
             //SetOnAction for menuItems.
-            viewResultInfo.setOnAction(e -> {
-                new ResultGUI(tableView1.getSelectionModel().getSelectedItems());
-            });
+            viewResultInfo.setOnAction(e -> new ResultGUI(tableView1.getSelectionModel().getSelectedItems()));
 
-            removeMenuItem.setOnAction(e -> {
-                tableView1.getSelectionModel().getSelectedItems().forEach(resultEntry -> tableView1.getItems().remove(resultEntry));
-            });
+            removeMenuItem.setOnAction(e -> tableView1.getSelectionModel().getSelectedItems().forEach(resultEntry -> tableView1.getItems().remove(resultEntry)));
 
             contextMenu.getItems().addAll(viewResultInfo, removeMenuItem);
 

@@ -21,12 +21,11 @@ public class TestRunner {
     }
 
     public static synchronized void runAllTests(TestHandler testHandler, IGUICallback guiCallback, int amountOfRuns) {
-
-        List<Runnable> runnables = new ArrayList<>();
+        Collection<Runnable> runnables = new ArrayList<>();
 
         for (int i = 0; i < amountOfRuns; ++i) {
-            runnables.addAll(runListTests(testHandler));
-            runnables.addAll(runSetTests(testHandler));
+            runnables.addAll(getListTests(testHandler));
+            runnables.addAll(getSetTests(testHandler));
         }
 
         // Submit runnable and add it to futures list.
@@ -51,8 +50,8 @@ public class TestRunner {
         guiCallback.refresh(testHandler);
     }
 
-    public static synchronized Collection<Runnable> runListTests(ITestCallback testHandler) {
-        List<Runnable> runnables = new ArrayList<>();
+    public static synchronized Collection<Runnable> getListTests(ITestCallback testHandler) {
+        Collection<Runnable> runnables = new ArrayList<>();
 
         CollectionsContainer.getLists().forEach(l -> {
             List<Integer> list = null;
@@ -91,8 +90,8 @@ public class TestRunner {
         return runnables;
     }
 
-    public static Collection<Runnable> runSetTests(ITestCallback testHandler) {
-        List<Runnable> runnables = new ArrayList<>();
+    public static Collection<Runnable> getSetTests(ITestCallback testHandler) {
+        Collection<Runnable> runnables = new ArrayList<>();
 
         CollectionsContainer.getSets().forEach(s -> {
             Set<Integer> set = null;
