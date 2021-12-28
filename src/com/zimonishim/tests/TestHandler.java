@@ -7,6 +7,8 @@ import java.util.*;
 
 public class TestHandler implements ITestCallback, Serializable {
 
+    public static final int SLEEP_AMOUNT = 1000;
+
     private final Collection<ResultEntry> sortingResultEntryList = new Stack<>();
     private final Collection<ResultEntry> addAllResultEntryList = new Stack<>();
     private final Collection<ResultEntry> removeResultEntryList = new Stack<>();

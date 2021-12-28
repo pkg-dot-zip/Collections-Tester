@@ -27,6 +27,6 @@ public class Main extends Application {
     private static void processStage(Stage stage){
         //TODO: Set window icon here.
 
-        stage.setOnCloseRequest(e -> TestRunner.executor.shutdown());
+        stage.setOnCloseRequest(e -> TestRunner.threadPoolExecutor.shutdown());
     }
 }

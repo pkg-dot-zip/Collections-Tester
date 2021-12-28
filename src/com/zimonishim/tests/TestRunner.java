@@ -5,40 +5,35 @@ import com.zimonishim.util.CollectionsContainer;
 import com.zimonishim.util.TestData;
 
 import java.util.*;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
+import java.util.concurrent.ThreadPoolExecutor;
 import java.util.stream.Collectors;
 
 public class TestRunner {
 
     //NOTE: https://gist.github.com/psayre23/c30a821239f4818b0709
 
-    public static ExecutorService executor = Executors.newFixedThreadPool(10); //This is public so we can setOnCloseRequest() in the Main class.
+    public static ThreadPoolExecutor threadPoolExecutor = (ThreadPoolExecutor) Executors.newCachedThreadPool();
 
     public static synchronized void runAllTests(TestHandler testHandler, IGUICallback guiCallback) {
         runAllTests(testHandler, guiCallback, 10);
     }
 
     public static synchronized void runAllTests(TestHandler testHandler, IGUICallback guiCallback, int amountOfRuns) {
-        List<Future<?>> futures = new ArrayList<>();
+        List<Runnable> runnables = new ArrayList<>();
 
         for (int i = 0; i < amountOfRuns; ++i) {
-            Future<?> f = executor.submit(() -> {
-                System.out.println("Running.");
-                runListTests(testHandler);
-                runSetTests(testHandler);
-            });
-            futures.add(f);
+            runnables.addAll(runListTests(testHandler));
+            runnables.addAll(runSetTests(testHandler));
         }
 
-        for (Future<?> future : futures) {
+        runnables.forEach(threadPoolExecutor::submit);
 
+        while (threadPoolExecutor.getCompletedTaskCount() > 0) {
+            System.out.println("Task count: " + threadPoolExecutor.getCompletedTaskCount());
             try {
-                future.get(); // This is a blocking call.
-                System.out.println("Finished feature");
-            } catch (InterruptedException | ExecutionException e) {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
@@ -46,7 +41,9 @@ public class TestRunner {
         guiCallback.refresh(testHandler);
     }
 
-    public static void runListTests(ITestCallback testHandler) {
+    public static synchronized Collection<Runnable> runListTests(ITestCallback testHandler) {
+        List<Runnable> runnables = new ArrayList<>();
+
         CollectionsContainer.getLists().forEach(l -> {
             List<Integer> list = null;
 
@@ -55,13 +52,8 @@ public class TestRunner {
             } catch (InstantiationException | IllegalAccessException instantiationException) {
                 instantiationException.printStackTrace();
             }
-            Thread sortThread = SortingTests.sortThread(list, Comparator.naturalOrder(), testHandler);
-            sortThread.start();
-            try {
-                sortThread.join();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            Runnable sortRunnable = SortingTests.sortRunnable(list, Comparator.naturalOrder(), testHandler);
+            runnables.add(sortRunnable);
 
             list = null;
             try {
@@ -70,13 +62,8 @@ public class TestRunner {
                 instantiationException.printStackTrace();
             }
 
-            Thread addAllThread = AddTests.addAllThread(list, testHandler);
-            addAllThread.start();
-            try {
-                addAllThread.join();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            Runnable addAllRunnable = AddTests.addAllRunnable(list, testHandler);
+            runnables.add(addAllRunnable);
 
             list = null;
             try {
@@ -87,17 +74,16 @@ public class TestRunner {
 
             list.addAll(Arrays.stream(TestData.getBigArray()).boxed().collect(Collectors.toList()));
 
-            Thread removeThread = RemoveTests.removeThread(list, testHandler);
-            removeThread.start();
-            try {
-                removeThread.join();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            Runnable removeRunnable = RemoveTests.removeRunnable(list, testHandler);
+            runnables.add(removeRunnable);
         });
+
+        return runnables;
     }
 
-    public static void runSetTests(ITestCallback testHandler) {
+    public static Collection<Runnable> runSetTests(ITestCallback testHandler) {
+        List<Runnable> runnables = new ArrayList<>();
+
         CollectionsContainer.getSets().forEach(s -> {
             Set<Integer> set = null;
 
@@ -107,13 +93,8 @@ public class TestRunner {
                 instantiationException.printStackTrace();
             }
 
-            Thread addAllThread = AddTests.addAllThread(set, testHandler);
-            addAllThread.start();
-            try {
-                addAllThread.join();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            Runnable addAllThread = AddTests.addAllRunnable(set, testHandler);
+            runnables.add(addAllThread);
 
             set = null;
             try {
@@ -123,13 +104,10 @@ public class TestRunner {
             }
 
             set.addAll(Arrays.stream(TestData.getBigArray()).boxed().collect(Collectors.toList()));
-            Thread removeThread = RemoveTests.removeThread(set, testHandler);
-            removeThread.start();
-            try {
-                removeThread.join();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            Runnable removeRunnable = RemoveTests.removeRunnable(set, testHandler);
+            runnables.add(removeRunnable);
         });
+
+        return runnables;
     }
 }

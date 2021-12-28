@@ -10,14 +10,19 @@ import static com.zimonishim.util.TestData.getRemoveArray;
 
 public class RemoveTests {
 
-    public static Thread removeThread(Collection<Integer> collection, ITestCallback callback) {
-        return removeThread(collection, getRemoveArray(), callback);
+    public static Runnable removeRunnable(Collection<Integer> collection, ITestCallback callback) {
+        return removeRunnable(collection, getRemoveArray(), callback);
     }
 
-    public static Thread removeThread(Collection<Integer> collection, int[] numbersToRemove, ITestCallback callback) {
-        return new Thread(() -> {
+    public static Runnable removeRunnable(Collection<Integer> collection, int[] numbersToRemove, ITestCallback callback) {
+        return () -> {
             removeTest(collection, Arrays.stream(numbersToRemove).boxed().collect(Collectors.toList()), callback);
-        });
+            try {
+                Thread.sleep(TestHandler.SLEEP_AMOUNT);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        };
     }
 
     public static void removeTest(Collection<Integer> collection, Collection<Integer> numbersToRemove, ITestCallback callback) {

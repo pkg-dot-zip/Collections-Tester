@@ -10,14 +10,19 @@ import static com.zimonishim.util.TestData.getBigArray;
 
 public class AddTests {
 
-    public static Thread addAllThread(Collection<Integer> collection, ITestCallback callback) {
-        return addAllThread(collection, getBigArray(), callback);
+    public static Runnable addAllRunnable(Collection<Integer> collection, ITestCallback callback) {
+        return addAllRunnable(collection, getBigArray(), callback);
     }
 
-    public static Thread addAllThread(Collection<Integer> collection, int[] dataCollection, ITestCallback callback) {
-        return new Thread(() -> {
+    public static Runnable addAllRunnable(Collection<Integer> collection, int[] dataCollection, ITestCallback callback) {
+        return () -> {
             addAllTest(collection, Arrays.stream(dataCollection).boxed().collect(Collectors.toList()), callback);
-        });
+            try {
+                Thread.sleep(TestHandler.SLEEP_AMOUNT);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        };
     }
 
     public static void addAllTest(Collection<Integer> collection, Collection<Integer> numbers, ITestCallback callback) {
