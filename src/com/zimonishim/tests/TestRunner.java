@@ -14,7 +14,7 @@ public class TestRunner {
 
     //NOTE: https://gist.github.com/psayre23/c30a821239f4818b0709
 
-    public static ThreadPoolExecutor threadPoolExecutor = (ThreadPoolExecutor) Executors.newCachedThreadPool();
+    public static ThreadPoolExecutor threadPoolExecutor = (ThreadPoolExecutor) Executors.newFixedThreadPool(3);
 
     public static synchronized void runAllTests(TestHandler testHandler, IGUICallback guiCallback) {
         runAllTests(testHandler, guiCallback, 10);
@@ -50,7 +50,7 @@ public class TestRunner {
         guiCallback.refresh(testHandler);
     }
 
-    public static synchronized Collection<Runnable> getListTests(ITestCallback testHandler) {
+    private static Collection<Runnable> getListTests(ITestCallback testHandler) {
         Collection<Runnable> runnables = new ArrayList<>();
 
         CollectionsContainer.getLists().forEach(l -> {
@@ -90,7 +90,7 @@ public class TestRunner {
         return runnables;
     }
 
-    public static Collection<Runnable> getSetTests(ITestCallback testHandler) {
+    private static Collection<Runnable> getSetTests(ITestCallback testHandler) {
         Collection<Runnable> runnables = new ArrayList<>();
 
         CollectionsContainer.getSets().forEach(s -> {
