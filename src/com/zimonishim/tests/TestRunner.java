@@ -2,9 +2,11 @@ package com.zimonishim.tests;
 
 import com.zimonishim.GUI.IGUICallback;
 import com.zimonishim.util.CollectionsContainer;
-import com.zimonishim.util.TestData;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -22,12 +24,11 @@ public class TestRunner {
         EXECUTOR.submit(() -> TestRunner.runAllTests(testHandler, callback));
     }
 
-
     private static synchronized void runAllTests(TestHandler testHandler, IGUICallback guiCallback) {
         runAllTests(testHandler, guiCallback, 10);
     }
 
-    private static synchronized void runAllTests(TestHandler testHandler, IGUICallback guiCallback, int amountOfRuns) {
+    private static synchronized void runAllTests(TestHandler testHandler, IGUICallback guiCallback, final int amountOfRuns) {
         Collection<Runnable> runnables = new ArrayList<>();
 
         for (int i = 0; i < amountOfRuns; ++i) {
@@ -41,8 +42,7 @@ public class TestRunner {
                 .collect(Collectors.toList());
 
 
-        // TODO: This is the reason why the application freezes for a bit. Fix this by not running this method in the main thread.
-        // Don't move on until al tasks are done.
+        // Don't move on until all tasks are done.
         boolean done = false;
         while (!done) {
             done = true;
@@ -61,37 +61,9 @@ public class TestRunner {
         Collection<Runnable> runnables = new ArrayList<>();
 
         CollectionsContainer.getLists().forEach(l -> {
-            List<Integer> list = null;
-
-            try {
-                list = l.getClass().newInstance();
-            } catch (InstantiationException | IllegalAccessException instantiationException) {
-                instantiationException.printStackTrace();
-            }
-            Runnable sortRunnable = SortingTests.sortRunnable(list, Comparator.naturalOrder(), testHandler);
-            runnables.add(sortRunnable);
-
-            list = null;
-            try {
-                list = l.getClass().newInstance();
-            } catch (InstantiationException | IllegalAccessException instantiationException) {
-                instantiationException.printStackTrace();
-            }
-
-            Runnable addAllRunnable = AddTests.addAllRunnable(list, testHandler);
-            runnables.add(addAllRunnable);
-
-            list = null;
-            try {
-                list = l.getClass().newInstance();
-            } catch (InstantiationException | IllegalAccessException instantiationException) {
-                instantiationException.printStackTrace();
-            }
-
-            list.addAll(Arrays.stream(TestData.getBigArray()).boxed().collect(Collectors.toList()));
-
-            Runnable removeRunnable = RemoveTests.removeRunnable(list, testHandler);
-            runnables.add(removeRunnable);
+            runnables.add(TestCreator.createSortTest(l, Comparator.naturalOrder(), testHandler));
+            runnables.add(TestCreator.createAddAllTest(l, testHandler));
+            runnables.add(TestCreator.createRemoveTest(l, testHandler));
         });
 
         return runnables;
@@ -101,27 +73,8 @@ public class TestRunner {
         Collection<Runnable> runnables = new ArrayList<>();
 
         CollectionsContainer.getSets().forEach(s -> {
-            Set<Integer> set = null;
-
-            try {
-                set = s.getClass().newInstance();
-            } catch (InstantiationException | IllegalAccessException instantiationException) {
-                instantiationException.printStackTrace();
-            }
-
-            Runnable addAllThread = AddTests.addAllRunnable(set, testHandler);
-            runnables.add(addAllThread);
-
-            set = null;
-            try {
-                set = s.getClass().newInstance();
-            } catch (InstantiationException | IllegalAccessException instantiationException) {
-                instantiationException.printStackTrace();
-            }
-
-            set.addAll(Arrays.stream(TestData.getBigArray()).boxed().collect(Collectors.toList()));
-            Runnable removeRunnable = RemoveTests.removeRunnable(set, testHandler);
-            runnables.add(removeRunnable);
+            runnables.add(TestCreator.createAddAllTest(s, testHandler));
+            runnables.add(TestCreator.createRemoveTest(s, testHandler));
         });
 
         return runnables;
