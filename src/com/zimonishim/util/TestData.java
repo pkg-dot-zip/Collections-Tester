@@ -7,12 +7,8 @@ import java.util.*;
  */
 public class TestData {
 
-    private static int[] integers; //Used as default collection content if none is specified.
-    private static int[] toRemove; //Used ONLY by the RemoveTest.
-
-    public static void initLargeArray() {
-        integers = setupLargeArray();
-    }
+    public static final int[] INTEGERS = setupLargeArray(); //Used as default collection content if none is specified.
+    public static int[] toRemove; //Used ONLY by the RemoveTest.
 
     //TODO: Optimize this method by not using collections here. -> Replace collections with arrays.
     private static int[] setupLargeArray() {
@@ -41,13 +37,5 @@ public class TestData {
         Collections.shuffle(list);
 
         return list.stream().mapToInt(i -> i).toArray();
-    }
-
-    public static int[] getBigArray() {
-        return integers;
-    }
-
-    public static int[] getRemoveArray() {
-        return toRemove;
     }
 }

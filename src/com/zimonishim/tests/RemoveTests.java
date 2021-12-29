@@ -1,17 +1,16 @@
 package com.zimonishim.tests;
 
 import com.zimonishim.GUI.resultTables.resultTypes.ResultEntry;
+import com.zimonishim.util.TestData;
 
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
-import static com.zimonishim.util.TestData.getRemoveArray;
-
 public class RemoveTests {
 
     public static Runnable removeRunnable(Collection<Integer> collection, ITestCallback callback) {
-        return removeRunnable(collection, getRemoveArray(), callback);
+        return removeRunnable(collection, TestData.toRemove, callback);
     }
 
     public static Runnable removeRunnable(Collection<Integer> collection, int[] numbersToRemove, ITestCallback callback) {

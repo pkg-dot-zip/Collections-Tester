@@ -42,7 +42,7 @@ public class TestCreator {
             e.printStackTrace();
         }
 
-        collection1.addAll(Arrays.stream(TestData.getBigArray()).boxed().collect(Collectors.toList()));
+        collection1.addAll(Arrays.stream(TestData.INTEGERS).boxed().collect(Collectors.toList()));
         return RemoveTests.removeRunnable(collection1, testHandler);
     }
 }

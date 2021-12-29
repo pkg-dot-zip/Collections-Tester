@@ -1,17 +1,16 @@
 package com.zimonishim.tests;
 
 import com.zimonishim.GUI.resultTables.resultTypes.ResultEntry;
+import com.zimonishim.util.TestData;
 
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
-import static com.zimonishim.util.TestData.getBigArray;
-
 public class AddTests {
 
     public static Runnable addAllRunnable(Collection<Integer> collection, ITestCallback callback) {
-        return addAllRunnable(collection, getBigArray(), callback);
+        return addAllRunnable(collection, TestData.INTEGERS, callback);
     }
 
     public static Runnable addAllRunnable(Collection<Integer> collection, int[] dataCollection, ITestCallback callback) {

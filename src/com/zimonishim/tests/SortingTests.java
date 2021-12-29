@@ -1,12 +1,11 @@
 package com.zimonishim.tests;
 
 import com.zimonishim.GUI.resultTables.resultTypes.ResultEntry;
+import com.zimonishim.util.TestData;
 
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
-
-import static com.zimonishim.util.TestData.getBigArray;
 
 /**
  * Contains methods used to test sorting subclasses of the java.util.List interface with different comparators.
@@ -14,7 +13,7 @@ import static com.zimonishim.util.TestData.getBigArray;
 public class SortingTests {
 
     public static Runnable sortRunnable(List<Integer> list, Comparator<Integer> comparator, ITestCallback callback) {
-        return sortRunnable(list, getBigArray(), comparator, callback);
+        return sortRunnable(list, TestData.INTEGERS, comparator, callback);
     }
 
     public static Runnable sortRunnable(List<Integer> list, int[] dataArray, Comparator<Integer> comparator, ITestCallback callback) {
