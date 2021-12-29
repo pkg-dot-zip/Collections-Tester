@@ -20,4 +20,6 @@ public interface IGUICallback {
     void reloadCharts(Map<String, Collection<ResultEntry>> results);
 
     void refresh(TestHandler testHandler);
+
+    void setProgress(double progress);
 }

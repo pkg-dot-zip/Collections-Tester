@@ -10,6 +10,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
 import java.util.Arrays;
@@ -53,6 +54,7 @@ public class MainGUI implements IGUI, IGUICallback {
     private final MenuItem insertMenuItem = new Menu("Insert");
     private final MenuItem saveMenuItem = new Menu("Save");
 
+    private final ProgressIndicator progressIndicator = new ProgressIndicator();
 
     public MainGUI(Stage stage) {
         this.stage = stage;
@@ -91,7 +93,8 @@ public class MainGUI implements IGUI, IGUICallback {
                 insertTab
         );
 
-        borderPane.setTop(testButton);
+        HBox hBox = new HBox(testButton, progressIndicator);
+        borderPane.setTop(hBox);
 
         this.mainTabPane.getTabs().addAll(
                 mainTab,
@@ -160,5 +163,10 @@ public class MainGUI implements IGUI, IGUICallback {
 
         long endTime = System.nanoTime();
         System.out.println("Total time for refreshing: " + (endTime - startTime));
+    }
+
+    @Override
+    public void setProgress(double progress) {
+        Platform.runLater(() -> progressIndicator.setProgress(progress));
     }
 }

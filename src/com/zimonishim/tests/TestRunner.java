@@ -41,21 +41,29 @@ public class TestRunner {
                 .map(THREAD_POOL_EXECUTOR::submit)
                 .collect(Collectors.toList());
 
+        int maxProgress = futures.size();
 
         // Don't move on until all tasks are done.
         boolean done = false;
         while (!done) {
+            int currentProgress = 0;
+
             done = true;
             for (Future<?> future : futures) {
                 if (!future.isDone()) {
                     done = false;
+                } else {
+                    currentProgress++;
                 }
             }
+
             try {
-                Thread.sleep(200);
+                Thread.sleep(500);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+
+            guiCallback.setProgress((double)currentProgress / maxProgress);
         }
 
         System.out.println("Done executing tasks");
