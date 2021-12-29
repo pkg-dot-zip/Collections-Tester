@@ -51,6 +51,11 @@ public class TestRunner {
                     done = false;
                 }
             }
+            try {
+                Thread.sleep(200);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
 
         System.out.println("Done executing tasks");
