@@ -16,7 +16,7 @@ public class ResultEntry implements Serializable {
     private final long totalTime;
     private final int[] afterActionArray;
 
-    public ResultEntry(String collectionClassName, String actionName, int[] beforeActionArray, Long totalTime, int[] afterActionArray) {
+    public ResultEntry(String collectionClassName, String actionName, int[] beforeActionArray, long totalTime, int[] afterActionArray) {
         this.collectionClassName = collectionClassName;
         this.actionName = actionName;
         this.beforeActionArray = beforeActionArray;
