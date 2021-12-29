@@ -47,16 +47,6 @@ public class ResultsTableViewHelper {
             protected void updateItem(String item, boolean empty) {
                 super.updateItem(item, empty);
                 this.setText(!empty ? item : null); //We set the cell's text to null if the cell is empty.
-
-                //TODO: Support icons.
-                //If no name is specified we do not set a value here.
-//                if (item == null){
-//                    return;
-//                }
-
-                //Here we apply the graphic with the type.
-//                System.out.println("Setting graphic for " + item + ".");
-//                this.setGraphic(IconHelper.getCollectionIcon(item));
             }
         });
 

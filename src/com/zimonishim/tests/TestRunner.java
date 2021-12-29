@@ -63,7 +63,7 @@ public class TestRunner {
                 e.printStackTrace();
             }
 
-            guiCallback.setProgress((double)currentProgress / maxProgress);
+            guiCallback.setProgress((double) currentProgress / maxProgress);
         }
 
         System.out.println("Done executing tasks");
@@ -75,7 +75,6 @@ public class TestRunner {
 
         CollectionsContainer.getLists().forEach(l -> {
 
-            // TODO: Add support for different comparators -> Make different messages and graphs per comparator.
             for (Comparator comparator : getComparatorsForSortingTests()) {
                 runnables.add(TestCreator.createSortTest(l, comparator, testHandler));
             }
