@@ -39,13 +39,13 @@ public class StatisticsHelper {
 
         allTimes.forEach((s, longs) -> {
             System.out.println("Now processing " + s + ".");
-            processStandardDeviation(longs);
+            double standardDeviation = processStandardDeviation(longs);
         });
 
         return allTimes;
     }
 
-    private static void processStandardDeviation(Set<Long> results) {
+    private static double processStandardDeviation(Set<Long> results) {
         List<Long> list = new ArrayList<>(results);
 
         double[] doubles = new double[results.size()];
@@ -53,7 +53,9 @@ public class StatisticsHelper {
             doubles[i] = list.get(i);
         }
 
-        System.out.println("Standard deviation: " + calculateStandardDeviation(doubles));
+        double standardDeviation = calculateStandardDeviation(doubles);
+        System.out.println("Standard deviation: " + standardDeviation);
+        return standardDeviation;
     }
 
     public static double calculateStandardDeviation(double[] input) {

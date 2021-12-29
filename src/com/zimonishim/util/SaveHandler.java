@@ -46,17 +46,13 @@ public class SaveHandler {
     }
 
     public static TestHandler mergeTestHandlers(Collection<TestHandler> testHandlers) {
-        if (testHandlers.size() < 2) {
-            return new TestHandler();
-        }
+        if (testHandlers.size() < 2) return new TestHandler();
 
         return mergeTestHandlers(testHandlers.toArray(new TestHandler[0]));
     }
 
     public static TestHandler mergeTestHandlers(TestHandler[] testHandlers) {
-        if (testHandlers.length == 2) {
-            return mergeTestHandler(testHandlers[0], testHandlers[1]);
-        }
+        if (testHandlers.length == 2) return mergeTestHandler(testHandlers[0], testHandlers[1]);
 
         return mergeTestHandlers(processIteration(testHandlers, testHandlers[1]));
     }
