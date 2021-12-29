@@ -37,15 +37,11 @@ public class AddTests {
         int[] copyOfUnaddedList = collection.stream().mapToInt(i -> i).toArray();
 
         long startTime = System.nanoTime();
-
         collection.addAll(numbers);
-
         long endTime = System.nanoTime();
-
         long totalTime = endTime - startTime;
 
         int[] copyOfAddedList = collection.stream().mapToInt(i -> i).toArray();
-
         callback.returnAddAllResult(new ResultEntry(collection.getClass().getSimpleName(), "Add All Numbers", copyOfUnaddedList, totalTime, copyOfAddedList));
     }
 }

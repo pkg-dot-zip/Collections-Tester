@@ -31,15 +31,11 @@ public class RemoveTests {
         int[] copyOfInitialList = collection.stream().mapToInt(i -> i).toArray();
 
         long startTime = System.nanoTime();
-
         numbersToRemove.forEach(collection::remove);
-
         long endTime = System.nanoTime();
-
         long totalTime = endTime - startTime;
 
         int[] copyOfRemovedList = collection.stream().mapToInt(i -> i).toArray();
-
         callback.returnRemoveResult(new ResultEntry(collection.getClass().getSimpleName(), "Remove Numbers", copyOfInitialList, totalTime, copyOfRemovedList));
     }
 }

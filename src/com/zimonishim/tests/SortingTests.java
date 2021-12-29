@@ -38,19 +38,14 @@ public class SortingTests {
         }
 
         list.addAll(Arrays.asList(dataArray));
-
         int[] copyOfUnsortedList = list.stream().mapToInt(i -> i).toArray();
 
         long startTime = System.nanoTime();
-
         list.sort(comparator);
-
         long endTime = System.nanoTime();
-
         long totalTime = endTime - startTime;
 
         int[] copyOfSortedList = list.stream().mapToInt(i -> i).toArray();
-
         callback.returnSortResult(new ResultEntry(list.getClass().getSimpleName(), comparator.getClass().getSimpleName(), copyOfUnsortedList, totalTime, copyOfSortedList));
     }
 }
