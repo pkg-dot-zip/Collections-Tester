@@ -7,6 +7,8 @@ import java.util.*;
 
 public class TestHandler implements ITestCallback, Serializable {
 
+    public static final int SLEEP_AMOUNT = 1000;
+
     private final Collection<ResultEntry> sortingResultEntryList = new Stack<>();
     private final Collection<ResultEntry> addAllResultEntryList = new Stack<>();
     private final Collection<ResultEntry> removeResultEntryList = new Stack<>();
@@ -46,15 +48,15 @@ public class TestHandler implements ITestCallback, Serializable {
         removeResultEntryList.add(resultEntry);
     }
 
-    public void addSortingResultCollection(Collection<ResultEntry> collection){
+    public void addSortingResultCollection(Collection<ResultEntry> collection) {
         sortingResultEntryList.addAll(collection);
     }
 
-    public void addAddAllResultCollection(Collection<ResultEntry> collection){
+    public void addAddAllResultCollection(Collection<ResultEntry> collection) {
         addAllResultEntryList.addAll(collection);
     }
 
-    public void addRemoveResultCollection(Collection<ResultEntry> collection){
+    public void addRemoveResultCollection(Collection<ResultEntry> collection) {
         removeResultEntryList.addAll(collection);
     }
 

@@ -47,16 +47,14 @@ public class ResultGUI implements IGUI {
         vBox.setSpacing(10);
 
         resultEntries.forEach(resultEntry -> vBox.getChildren().add(getEntryPane(resultEntry)));
-
         mainPane.setContent(vBox);
     }
 
     @Override
     public void actionHandlingSetup() {
-
     }
 
-    private Pane getEntryPane(ResultEntry resultEntry){
+    private Pane getEntryPane(ResultEntry resultEntry) {
         VBox vBox = new VBox();
 
         vBox.setSpacing(2);
@@ -70,7 +68,7 @@ public class ResultGUI implements IGUI {
         return vBox;
     }
 
-    private TabPane getTabPane(ResultEntry resultEntry){
+    private TabPane getTabPane(ResultEntry resultEntry) {
         //Init.
         TabPane resultTabPane = new TabPane();
         Tab preActionTab = new Tab("Pre-Action", arrayTextArea(resultEntry.getBeforeActionArray()));
@@ -85,7 +83,7 @@ public class ResultGUI implements IGUI {
         return resultTabPane;
     }
 
-    private TextArea arrayTextArea(int[] array){
+    private TextArea arrayTextArea(int[] array) {
         TextArea textArea = new TextArea();
         textArea.setPadding(new Insets(0, 10, 0, 0));
 
