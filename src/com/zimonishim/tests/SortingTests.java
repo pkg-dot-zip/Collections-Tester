@@ -51,6 +51,6 @@ public class SortingTests {
 
         int[] copyOfSortedList = list.stream().mapToInt(i -> i).toArray();
 
-        callback.returnSortResult(new ResultEntry(list.getClass().getSimpleName(), "Sort Natural Order", copyOfUnsortedList, totalTime, copyOfSortedList));
+        callback.returnSortResult(new ResultEntry(list.getClass().getSimpleName(), comparator.getClass().getSimpleName(), copyOfUnsortedList, totalTime, copyOfSortedList));
     }
 }
