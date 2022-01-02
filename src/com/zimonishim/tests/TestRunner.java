@@ -43,7 +43,7 @@ public class TestRunner {
 
         int maxProgress = futures.size();
 
-        // Don't move on until all tasks are done.
+        // Don't move on until all tasks are done & update progressbar.
         boolean done = false;
         while (!done) {
             int currentProgress = 0;
