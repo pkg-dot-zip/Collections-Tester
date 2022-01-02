@@ -33,7 +33,7 @@ public class TestRunner {
     }
 
     private static synchronized void runAllTests(TestHandler testHandler, IGUICallback guiCallback, IListSelectionCallback selectionCallback) {
-        runAllTests(testHandler, guiCallback, selectionCallback, 10);
+        runAllTests(testHandler, guiCallback, selectionCallback, guiCallback.getRunAmounts());
     }
 
     private static synchronized void runAllTests(TestHandler testHandler, IGUICallback guiCallback, IListSelectionCallback selectionCallback, final int amountOfRuns) {

@@ -165,4 +165,9 @@ public class MainGUI implements IGUI, IGUICallback {
     public void setProgress(double progress) {
         Platform.runLater(() -> mainTabView.getProgressIndicator().setProgress(progress));
     }
+
+    @Override
+    public int getRunAmounts() {
+        return mainTabView.getRunAmount();
+    }
 }
