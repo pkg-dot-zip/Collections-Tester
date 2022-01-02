@@ -1,7 +1,7 @@
 package com.zimonishim.tests;
 
-import com.zimonishim.GUI.IGUICallback;
-import com.zimonishim.util.CollectionsContainer;
+import com.zimonishim.GUI.callbacks.IGUICallback;
+import com.zimonishim.GUI.callbacks.IListSelectionCallback;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -20,20 +20,28 @@ public class TestRunner {
     public static final ExecutorService EXECUTOR = Executors.newSingleThreadExecutor(); // Used to run all the tests on -> Responsible for starting other threads as well.
     public static final ThreadPoolExecutor THREAD_POOL_EXECUTOR = (ThreadPoolExecutor) Executors.newFixedThreadPool(3);
 
-    public static synchronized void runAllTestsFromButton(TestHandler testHandler, IGUICallback callback) {
-        EXECUTOR.submit(() -> TestRunner.runAllTests(testHandler, callback));
+    public static synchronized boolean runAllTestsFromButton(TestHandler testHandler, IGUICallback callback, IListSelectionCallback selectionCallback) {
+        // If nothing is selected we return false before executing any tests.
+        if (selectionCallback.getSelectedSets().isEmpty() && selectionCallback.getSelectedSets().isEmpty()) {
+            return false;
+        }
+
+
+        // Else we submit the tests to the executor and return true.
+        EXECUTOR.submit(() -> TestRunner.runAllTests(testHandler, callback, selectionCallback));
+        return true;
     }
 
-    private static synchronized void runAllTests(TestHandler testHandler, IGUICallback guiCallback) {
-        runAllTests(testHandler, guiCallback, 10);
+    private static synchronized void runAllTests(TestHandler testHandler, IGUICallback guiCallback, IListSelectionCallback selectionCallback) {
+        runAllTests(testHandler, guiCallback, selectionCallback, 10);
     }
 
-    private static synchronized void runAllTests(TestHandler testHandler, IGUICallback guiCallback, final int amountOfRuns) {
+    private static synchronized void runAllTests(TestHandler testHandler, IGUICallback guiCallback, IListSelectionCallback selectionCallback, final int amountOfRuns) {
         Collection<Runnable> runnables = new ArrayList<>();
 
         for (int i = 0; i < amountOfRuns; ++i) {
-            runnables.addAll(getListTests(testHandler));
-            runnables.addAll(getSetTests(testHandler));
+            runnables.addAll(getListTests(testHandler, selectionCallback));
+            runnables.addAll(getSetTests(testHandler, selectionCallback));
         }
 
         // Submit runnable and add it to futures list.
@@ -43,7 +51,7 @@ public class TestRunner {
 
         int maxProgress = futures.size();
 
-        // Don't move on until all tasks are done.
+        // Don't move on until all tasks are done & update progressbar.
         boolean done = false;
         while (!done) {
             int currentProgress = 0;
@@ -70,10 +78,10 @@ public class TestRunner {
         guiCallback.refresh(testHandler);
     }
 
-    private static Collection<Runnable> getListTests(ITestCallback testHandler) {
+    private static Collection<Runnable> getListTests(ITestCallback testHandler, IListSelectionCallback selectionCallback) {
         Collection<Runnable> runnables = new ArrayList<>();
 
-        CollectionsContainer.getLists().forEach(l -> {
+        selectionCallback.getSelectedLists().forEach(l -> {
 
             for (Comparator comparator : getComparatorsForSortingTests()) {
                 runnables.add(TestCreator.createSortTest(l, comparator, testHandler));
@@ -93,10 +101,10 @@ public class TestRunner {
         };
     }
 
-    private static Collection<Runnable> getSetTests(ITestCallback testHandler) {
+    private static Collection<Runnable> getSetTests(ITestCallback testHandler, IListSelectionCallback selectionCallback) {
         Collection<Runnable> runnables = new ArrayList<>();
 
-        CollectionsContainer.getSets().forEach(s -> {
+        selectionCallback.getSelectedSets().forEach(s -> {
             runnables.add(TestCreator.createAddAllTest(s, testHandler));
             runnables.add(TestCreator.createRemoveTest(s, testHandler));
         });
