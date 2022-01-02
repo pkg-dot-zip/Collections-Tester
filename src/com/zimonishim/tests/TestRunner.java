@@ -1,7 +1,7 @@
 package com.zimonishim.tests;
 
-import com.zimonishim.GUI.IGUICallback;
-import com.zimonishim.GUI.IListSelectionCallback;
+import com.zimonishim.GUI.callbacks.IGUICallback;
+import com.zimonishim.GUI.callbacks.IListSelectionCallback;
 
 import java.util.ArrayList;
 import java.util.Collection;

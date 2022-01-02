@@ -1,4 +1,4 @@
-package com.zimonishim.GUI;
+package com.zimonishim.GUI.callbacks;
 
 import com.zimonishim.GUI.resultTables.resultTypes.ResultEntry;
 import com.zimonishim.tests.TestHandler;

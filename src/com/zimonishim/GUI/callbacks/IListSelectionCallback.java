@@ -1,4 +1,4 @@
-package com.zimonishim.GUI;
+package com.zimonishim.GUI.callbacks;
 
 import java.util.Collection;
 import java.util.List;
