@@ -112,7 +112,7 @@ public class MainGUI implements IGUI, IGUICallback {
     public void actionHandlingSetup() {
         menuBarActionHandlingSetup();
 
-        mainTabView.testButton.setOnAction(e -> TestRunner.runAllTestsFromButton(testHandler, this, mainTabView));
+        mainTabView.getTestButton().setOnAction(e -> TestRunner.runAllTestsFromButton(testHandler, this, mainTabView));
     }
 
     private void menuBarActionHandlingSetup() {
@@ -163,6 +163,6 @@ public class MainGUI implements IGUI, IGUICallback {
 
     @Override
     public void setProgress(double progress) {
-        Platform.runLater(() -> mainTabView.progressIndicator.setProgress(progress));
+        Platform.runLater(() -> mainTabView.getProgressIndicator().setProgress(progress));
     }
 }

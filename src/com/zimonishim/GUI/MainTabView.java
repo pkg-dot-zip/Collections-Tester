@@ -16,8 +16,8 @@ public class MainTabView implements IListSelectionCallback {
     //Main tab.
     private final ListView<CheckBox> listListView = new ListView<>();
     private final ListView<CheckBox> setListView = new ListView<>();
-    public final Button testButton = new Button("Test Collections");
-    public final ProgressIndicator progressIndicator = new ProgressIndicator();
+    private final Button testButton = new Button("Test Collections");
+    private final ProgressIndicator progressIndicator = new ProgressIndicator();
 
     public Control getPaneForMainTab() {
         ScrollPane pane = new ScrollPane();
@@ -30,6 +30,14 @@ public class MainTabView implements IListSelectionCallback {
         vBox.getChildren().add(new HBox(testButton, progressIndicator));
         pane.setContent(vBox);
         return pane;
+    }
+
+    public Button getTestButton() {
+        return this.testButton;
+    }
+
+    public ProgressIndicator getProgressIndicator() {
+        return this.progressIndicator;
     }
 
     @Override
