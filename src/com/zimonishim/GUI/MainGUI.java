@@ -52,6 +52,7 @@ public class MainGUI implements IGUI, IGUICallback {
     private final MenuItem openMenuItem = new Menu("Open");
     private final MenuItem insertMenuItem = new Menu("Insert");
     private final MenuItem saveMenuItem = new Menu("Save");
+    private final MenuItem exitMenuItem = new MenuItem("Exit");
 
 
     public MainGUI(Stage stage) {
@@ -104,7 +105,7 @@ public class MainGUI implements IGUI, IGUICallback {
     }
 
     private void menuBarSetup() {
-        fileMenu.getItems().addAll(openMenuItem, insertMenuItem, new SeparatorMenuItem(), saveMenuItem);
+        fileMenu.getItems().addAll(openMenuItem, insertMenuItem, new SeparatorMenuItem(), saveMenuItem, new SeparatorMenuItem(), exitMenuItem);
         menuBar.getMenus().add(fileMenu);
     }
 
@@ -126,6 +127,7 @@ public class MainGUI implements IGUI, IGUICallback {
             refresh(this.testHandler);
         });
         saveMenuItem.setOnAction(e -> SaveHandler.AsObject.write(testHandler));
+        exitMenuItem.setOnAction(e -> Platform.exit());
     }
 
     @Override
