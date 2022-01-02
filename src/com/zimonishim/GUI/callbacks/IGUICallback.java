@@ -22,4 +22,5 @@ public interface IGUICallback {
     void refresh(TestHandler testHandler);
 
     void setProgress(double progress);
+    int getRunAmounts();
 }

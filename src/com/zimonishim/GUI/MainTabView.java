@@ -18,6 +18,7 @@ public class MainTabView implements IListSelectionCallback {
     private final ListView<CheckBox> setListView = new ListView<>();
     private final Button testButton = new Button("Test Collections");
     private final ProgressIndicator progressIndicator = new ProgressIndicator();
+    private final Slider runAmountSlider = new Slider(1D, 20D, 1D);
 
     public Control getPaneForMainTab() {
         ScrollPane pane = new ScrollPane();
@@ -28,6 +29,16 @@ public class MainTabView implements IListSelectionCallback {
 
         vBox.getChildren().add(new HBox(listListView, setListView));
         vBox.getChildren().add(new HBox(testButton, progressIndicator));
+
+        runAmountSlider.setMajorTickUnit(1D);
+        runAmountSlider.setMinorTickCount(0);
+        runAmountSlider.setBlockIncrement(1);
+        runAmountSlider.setShowTickLabels(true);
+        runAmountSlider.setShowTickMarks(true);
+        runAmountSlider.setSnapToTicks(true);
+
+        vBox.getChildren().add(runAmountSlider);
+
         pane.setContent(vBox);
         return pane;
     }
@@ -72,4 +83,7 @@ public class MainTabView implements IListSelectionCallback {
         return listToReturn;
     }
 
+    public int getRunAmount() {
+        return (int) runAmountSlider.getValue();
+    }
 }
